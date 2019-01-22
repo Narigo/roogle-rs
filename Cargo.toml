@@ -1,0 +1,7 @@
+[package]
+name = "roogle-rs"
+version = "0.1.0"
+authors = ["Joern Bernhardt <joern.bernhardt@googlemail.com>"]
+
+[dependencies]
+azul = { git = "https://github.com/maps4print/azul", rev = "2ae34500971bb779377981424d8789460bfa3aa8" }
