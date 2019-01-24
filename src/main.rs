@@ -1,31 +1,39 @@
+#![windows_subsystem = "windows"]
+
 extern crate azul;
 
-use azul::{prelude::*, widgets::{label::Label, button::Button}};
+use azul::prelude::*;
+#[cfg(debug_assertions)]
+use std::time::Duration;
 
-struct DataModel {
-    counter: usize,
-}
+struct MyDataModel;
 
-impl Layout for DataModel {
-    // Model renders View
-    fn layout(&self, _info: WindowInfo<Self>) -> Dom<Self> {
-        let label = Label::new(format!("{}", self.counter)).dom();
-        let button = Button::with_label("Update counter").dom()
-            .with_callback(On::MouseUp, Callback(update_counter));
-
-        Dom::new(NodeType::Div)
-            .with_child(label)
-            .with_child(button)
+impl Layout for MyDataModel {
+    fn layout(&self, info: WindowInfo<Self>) -> Dom<Self> {
+        Dom::div().with_id("wrapper")
+            .with_child(Dom::label("Hello123").with_id("red"))
+            .with_child(Dom::div().with_id("sub-wrapper")
+                .with_child(Dom::div().with_id("yellow")
+                    .with_child(Dom::div().with_id("orange-1"))
+                    .with_child(Dom::div().with_id("orange-2"))
+                )
+                .with_child(Dom::div().with_id("grey"))
+            )
+            .with_child((0..50).map(|i| Dom::label(format!("{}", i))).collect::<Dom<Self>>().with_id("rows"))
     }
 }
 
-// View updates Model
-fn update_counter(app_state: &mut AppState<DataModel>, _event: WindowEvent<DataModel>) -> UpdateScreen {
-    app_state.data.modify(|state| state.counter += 1);
-    UpdateScreen::Redraw
-}
-
 fn main() {
-    let app = App::new(DataModel { counter: 0 }, AppConfig::default());
-    app.run(Window::new(WindowCreateOptions::default(), css::native()).unwrap()).unwrap();
+
+    macro_rules! CSS_PATH { () => (concat!(env!("CARGO_MANIFEST_DIR"), "/src/main.css")) }
+
+    let mut app = App::new(MyDataModel, AppConfig::default());
+
+    #[cfg(debug_assertions)]
+    let window = Window::new_hot_reload(WindowCreateOptions::default(), css::hot_reload(CSS_PATH!(), Duration::from_millis(500))).unwrap();
+
+    #[cfg(not(debug_assertions))]
+    let window = Window::new(WindowCreateOptions::default(), css::from_str(include_str!(CSS_PATH!())).unwrap()).unwrap();
+
+    app.run(window).unwrap();
 }
