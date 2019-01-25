@@ -10,11 +10,20 @@ struct MyDataModel;
 
 impl Layout for MyDataModel {
     fn layout(&self, _info: WindowInfo<Self>) -> Dom<Self> {
-        Dom::div().with_id("main").with_child(
-            Dom::div()
-                .with_id("head")
-                .with_child(Dom::label("Welcome to Roogle")),
-        )
+        Dom::div()
+            .with_id("main")
+            .with_child(
+                Dom::div()
+                    .with_id("head")
+                    .with_child(Dom::label("Welcome to Roogle").with_class("headline"))
+                    .with_child(
+                        Dom::label("This is a description about roogle").with_class("description"),
+                    ),
+            ).with_child(
+                Dom::div()
+                    .with_id("processor")
+                    .with_child(Dom::label("Drag a text file here to test it!")),
+            )
     }
 }
 

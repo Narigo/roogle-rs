@@ -6,5 +6,19 @@
 }
 
 #head {
+  background-color: #eee;
   color: black;
+}
+
+.headline {
+  font-size: 32pt;
+}
+
+.description {
+  align-items: flex-start;
+}
+
+#processor {
+  background-color: #cec;
+  border: 5px dotted #4b3;
 }
