@@ -22,7 +22,11 @@ impl Layout for MyDataModel {
             ).with_child(
                 Dom::div()
                     .with_id("processor")
-                    .with_child(Dom::label("Drag a text file here to test it!")),
+                    .with_child(Dom::label("Drag a text file here to test it!"))
+                    .with_callback(On::MouseUp, Callback(|m: &mut AppState<MyDataModel>, _| {
+                        println!("clicked on drag here");
+                        Redraw
+                    }))
             )
     }
 }
