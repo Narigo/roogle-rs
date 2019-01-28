@@ -18,7 +18,7 @@ fn main() {
         .invoke_handler(|_webview, arg| {
             use Cmd::*;
             match serde_json::from_str(arg).unwrap() {
-                Init => (),
+                Init => println!("this would be the init handler"),
                 Log { text } => println!("{}", text),
             }
             Ok(())

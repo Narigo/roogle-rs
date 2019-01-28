@@ -5,3 +5,5 @@ import { App } from "./component/app";
 const $root = document.getElementById("root");
 
 ReactDom.render(<App />, $root);
+
+window.external.invoke(JSON.stringify({ cmd: "init" }));
