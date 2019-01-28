@@ -5,9 +5,11 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "build": "npm run build:bundle",
+    "build": "npm run build:bundle && npm run build:rust",
     "build:bundle": "parcel build src/frontend/index.html --public-url .",
-    "start": "parcel src/frontend/index.html",
+    "build:rust": "cargo build",
+    "dev": "parcel src/frontend/index.html",
+    "start": "npm run build:bundle && cargo run",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
