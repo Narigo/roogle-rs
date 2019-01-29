@@ -11,6 +11,7 @@ fn main() {
     web_view::builder()
         .title("Roogle")
         .content(Content::Html(include_str!("../dist/index.html")))
+        // .content(Content::Url("https://www.wikipedia.org/"))
         .size(800, 600)
         .resizable(true)
         .debug(true)

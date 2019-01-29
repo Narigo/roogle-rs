@@ -1,22 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "./app.scss";
 
+import { Dropfile } from "../dropfile";
+import { Result } from "../result";
+
 const App = () => {
-  console.log("style", style);
+  const [sentences, setSentences] = useState(null);
+  console.log("App render");
+
   return (
     <div className={style.root}>
       <header className={style.header}>
         <h1>Welcome to Roogle.</h1>
         <p>This is a description about roogle.</p>
       </header>
-      <div
-        className={style.dropfile}
-        onClick={() => {
-          window.external.invoke(JSON.stringify({ cmd: "log", text: "hello click!" }));
-        }}
-      >
-        Drop a PDF file here
-      </div>
+      {sentences === null ? (
+        <Dropfile
+          onDrop={event => {
+            console.log("event", event);
+            window.external.invoke(JSON.stringify({ cmd: "log", text: "dropped something" }));
+            setSentences(event);
+            // const text = JSON.stringify(event);
+            // window.external.invoke(JSON.stringify({ cmd: "log", text }));
+          }}
+        />
+      ) : (
+        <Result sentences={sentences} />
+      )}
     </div>
   );
 };
