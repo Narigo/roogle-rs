@@ -3,9 +3,11 @@ import style from "./app.scss";
 
 import { Dropfile } from "../dropfile";
 import { Result } from "../result";
+import useRustCommand from "../../hooks/use-rust-command";
 
 const App = () => {
   const [sentences, setSentences] = useState(null);
+  const log = useRustCommand("log");
   console.log("App render");
 
   return (
@@ -17,11 +19,8 @@ const App = () => {
       {sentences === null ? (
         <Dropfile
           onDrop={event => {
-            console.log("event", event);
-            window.external.invoke(JSON.stringify({ cmd: "log", text: "dropped something" }));
-            setSentences(event);
-            // const text = JSON.stringify(event);
-            // window.external.invoke(JSON.stringify({ cmd: "log", text }));
+            log(`dropped something ${JSON.stringify(event.dataTransfer.getData())}`);
+            setSentences(JSON.stringify(event.dataTransfer));
           }}
         />
       ) : (
