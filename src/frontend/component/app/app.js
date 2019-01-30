@@ -18,9 +18,9 @@ const App = () => {
       </header>
       {sentences === null ? (
         <Dropfile
-          onDrop={event => {
-            log(`dropped something ${JSON.stringify(event.dataTransfer.getData())}`);
-            setSentences(JSON.stringify(event.dataTransfer));
+          onDrop={files => {
+            log(`dropped something ${JSON.stringify(files)}`);
+            setSentences(files);
           }}
         />
       ) : (

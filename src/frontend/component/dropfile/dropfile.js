@@ -17,8 +17,20 @@ const Dropfile = ({ onDrop }) => {
       }}
       onDrop={event => {
         event.preventDefault();
+        const files = [];
+        if (event.dataTransfer.items) {
+          for (let i = 0; i < event.dataTransfer.items.length; i++) {
+            if (event.dataTransfer.items[i].kind === "file") {
+              files.push(event.dataTransfer.items[i].getAsFile());
+            }
+          }
+        } else {
+          for (let i = 0; i < event.dataTransfer.files.length; i++) {
+            files.push(event.dataTransfer.files[i]);
+          }
+        }
         setDragOver(false);
-        onDrop(event);
+        onDrop(files.map(f => f.name));
       }}
     >
       Drop a PDF file here
