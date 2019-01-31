@@ -15,6 +15,10 @@ const Dropfile = ({ onDrop }) => {
         event.preventDefault();
         setDragOver(true);
       }}
+      onDragLeave={event => {
+        event.preventDefault();
+        setDragOver(false);
+      }}
       onDrop={event => {
         event.preventDefault();
         const files = [];
@@ -29,8 +33,23 @@ const Dropfile = ({ onDrop }) => {
             files.push(event.dataTransfer.files[i]);
           }
         }
-        setDragOver(false);
-        onDrop(files.map(f => f.name));
+        Promise.all(
+          files.map(
+            file =>
+              new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                  resolve(event.target.result);
+                };
+                reader.onerror = function(error) {
+                  reject(error);
+                };
+                reader.readAsDataURL(file);
+              })
+          )
+        )
+          .then(files => onDrop(files))
+          .catch(err => log(`Error while reading file: ${err}`));
       }}
     >
       Drop a PDF file here

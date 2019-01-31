@@ -19,7 +19,7 @@ const App = () => {
       {sentences === null ? (
         <Dropfile
           onDrop={files => {
-            log(`dropped something ${JSON.stringify(files)}`);
+            log(`dropped something ${JSON.stringify(files.map(f => Object.keys(f)))}`);
             setSentences(files);
           }}
         />
