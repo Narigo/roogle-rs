@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import style from "./app.scss";
 
 import { Dropfile } from "../dropfile";
-import { Result } from "../result";
+import { Process } from "../process";
 import useRustCommand from "../../hooks/use-rust-command";
 
 const App = () => {
@@ -19,12 +19,12 @@ const App = () => {
       {sentences === null ? (
         <Dropfile
           onDrop={files => {
-            log(`dropped something ${JSON.stringify(files.map(f => Object.keys(f)))}`);
+            log(`dropped something`);
             setSentences(files);
           }}
         />
       ) : (
-        <Result sentences={sentences} />
+        <Process sentences={sentences} />
       )}
     </div>
   );
