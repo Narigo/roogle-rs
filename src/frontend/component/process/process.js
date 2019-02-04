@@ -43,7 +43,7 @@ const Process = ({ files }) => {
         }
       })
       .catch(error => {
-        console.log("catched!");
+        console.log("catched!", error);
         if (error.message === "cancelled") {
           if (tmpFile) {
             return removeTmpFile(tmpFile);

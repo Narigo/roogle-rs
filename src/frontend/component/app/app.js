@@ -6,25 +6,25 @@ import { Process } from "../process";
 import useRustCommand from "../../hooks/use-rust-command";
 
 const App = () => {
-  const [sentences, setSentences] = useState(null);
+  const [files, setFiles] = useState(null);
   const log = useRustCommand("log");
   console.log("App render");
 
   return (
     <div className={style.root}>
-      <header className={style.header}>
+      <header className={style.header} onClick={() => setFiles(null)}>
         <h1>Welcome to Roogle.</h1>
         <p>This is a description about roogle.</p>
       </header>
-      {sentences === null ? (
+      {files === null ? (
         <Dropfile
           onDrop={files => {
             log(`dropped something`);
-            setSentences(files);
+            setFiles(files);
           }}
         />
       ) : (
-        <Process sentences={sentences} />
+        <Process files={files} />
       )}
     </div>
   );
