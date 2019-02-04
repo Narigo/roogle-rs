@@ -7,6 +7,7 @@ const Process = ({ files }) => {
 
   useEffect(() => {
     let cancelled = false;
+    let tmpFile;
     writeTmpFile()
       .then(file => {
         if (!cancelled) {
@@ -61,6 +62,8 @@ const Process = ({ files }) => {
         <div>temp file created, reading PDF</div>
       ) : progress === "process-text" ? (
         <div>Selecting sentences</div>
+      ) : progress === "remove-tmp-file" ? (
+        <div>Cleaning up and continue to show results</div>
       ) : (
         <div>{sentences}</div>
       )}
