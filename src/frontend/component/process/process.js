@@ -9,39 +9,31 @@ const Process = ({ files }) => {
     let cancelled = false;
     let tmpFile;
     writeTmpFile()
-      .then(file => {
-        if (!cancelled) {
+      .then(
+        checkCancelled(file => {
           setProgress("tmp-file-created");
           tmpFile = file;
           return readPdfIntoText(file);
-        } else {
-          throw new Error("cancelled");
-        }
-      })
-      .then(text => {
-        if (!cancelled) {
+        })
+      )
+      .then(
+        checkCancelled(text => {
           setProgress("process-text");
           return splitTextIntoSentences(text);
-        } else {
-          throw new Error("cancelled");
-        }
-      })
-      .then(sentences => {
-        if (!cancelled) {
+        })
+      )
+      .then(
+        checkCancelled(sentences => {
           setProgress("remove-tmp-file");
           return removeTmpFile(tmpFile).then(() => sentences);
-        } else {
-          throw new Error("cancelled");
-        }
-      })
-      .then(sentences => {
-        if (!cancelled) {
+        })
+      )
+      .then(
+        checkCancelled(sentences => {
           setProgress("done");
           return setSentences(sentences);
-        } else {
-          throw new Error("cancelled");
-        }
-      })
+        })
+      )
       .catch(error => {
         console.log("catched!", error);
         if (error.message === "cancelled") {
@@ -53,6 +45,16 @@ const Process = ({ files }) => {
     return () => {
       cancelled = true;
     };
+
+    function checkCancelled(fn) {
+      return (...args) => {
+        if (!cancelled) {
+          return fn(...args);
+        } else {
+          throw new Error("cancelled");
+        }
+      };
+    }
   }, [files]);
   return (
     <div className={style.root}>
