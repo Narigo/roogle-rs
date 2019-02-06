@@ -1,31 +1,33 @@
 import React, { useEffect, useState } from "react";
 import style from "./process.scss";
+import useRustCommand from "../../hooks/use-rust-command.js";
 
 const Process = ({ files }) => {
   const [sentences, setSentences] = useState(null);
   const [progress, setProgress] = useState("start");
+  const log = useRustCommand("log");
 
   useEffect(() => {
     let cancelled = false;
     let tmpFile;
-    writeTmpFile()
+    createTmpFile({ log })
       .then(
         checkCancelled(file => {
           setProgress("tmp-file-created");
           tmpFile = file;
-          return readPdfIntoText(file);
+          return readPdfIntoText({ file, log });
         })
       )
       .then(
         checkCancelled(text => {
           setProgress("process-text");
-          return splitTextIntoSentences(text);
+          return splitTextIntoSentences({ text, log });
         })
       )
       .then(
         checkCancelled(sentences => {
           setProgress("remove-tmp-file");
-          return removeTmpFile(tmpFile).then(() => sentences);
+          return removeTmpFile({ file: tmpFile, log }).then(() => sentences);
         })
       )
       .then(
@@ -38,7 +40,7 @@ const Process = ({ files }) => {
         console.log("catched!", error);
         if (error.message === "cancelled") {
           if (tmpFile) {
-            return removeTmpFile(tmpFile);
+            return removeTmpFile({ file: tmpFile, log });
           }
         }
       });
@@ -75,27 +77,31 @@ const Process = ({ files }) => {
 
 export default Process;
 
-function writeTmpFile() {
+function createTmpFile({ log }) {
   console.log(`called writeTmpFile()`);
   return new Promise(resolve => {
+    log("is this actually sync?");
     setTimeout(() => resolve("/tmp/someFile"), 2000);
   });
 }
-function readPdfIntoText(file) {
+function readPdfIntoText({ file, log }) {
   console.log(`called readPdfIntoText(${file})`);
   return new Promise(resolve => {
+    log("reading pdf");
     setTimeout(() => resolve("This is a test. Hello, good morning! Another test sentence."), 2000);
   });
 }
-function splitTextIntoSentences(text) {
+function splitTextIntoSentences({ text, log }) {
   console.log(`called splitTextIntoSentences(${text})`);
   return new Promise(resolve => {
+    log("splitting text");
     setTimeout(() => resolve(["This is a test", "Hello good morning", "Another test sentence"]), 2000);
   });
 }
-function removeTmpFile(tmpFile) {
-  console.log(`called removeTmpFile(${tmpFile})`);
+function removeTmpFile({ file, log }) {
+  console.log(`called removeTmpFile(${file})`);
   return new Promise(resolve => {
+    log("removing tempfile");
     setTimeout(resolve, 2000);
   });
 }
