@@ -6,11 +6,12 @@ const Process = ({ files }) => {
   const [sentences, setSentences] = useState(null);
   const [progress, setProgress] = useState("start");
   const log = useRustCommand("log");
+  const logLong = useRustCommand("logLong");
 
   useEffect(() => {
     let cancelled = false;
     let tmpFile;
-    createTmpFile({ log })
+    createTmpFile({ log: logLong })
       .then(
         checkCancelled(file => {
           setProgress("tmp-file-created");

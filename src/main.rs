@@ -6,6 +6,7 @@ extern crate serde_json;
 extern crate web_view;
 
 use web_view::*;
+use std::thread::sleep_ms;
 
 fn main() {
     web_view::builder()
@@ -21,6 +22,10 @@ fn main() {
             match serde_json::from_str(arg).unwrap() {
                 Init => println!("this would be the init handler"),
                 Log { text } => println!("{}", text),
+                LogLong { text } => {
+                    sleep_ms(15000);
+                    println!("{}", text)
+                }
             }
             Ok(())
         }).run()
@@ -32,4 +37,5 @@ fn main() {
 pub enum Cmd {
     Init,
     Log { text: String },
+    LogLong { text: String },
 }
