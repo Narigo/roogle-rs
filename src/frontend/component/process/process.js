@@ -7,6 +7,10 @@ const Process = ({ files }) => {
   const [progress, setProgress] = useState("start");
   const log = useRustCommand("log");
   const logLong = useRustCommand("logLong");
+  const createFile = useRustCommand("createTmpFile");
+  const readPdf = useRustCommand("readPdf");
+  const splitText = useRustCommand("splitText");
+  const removeFile = useRustCommand("removeTmpFile");
 
   useEffect(() => {
     let cancelled = false;
