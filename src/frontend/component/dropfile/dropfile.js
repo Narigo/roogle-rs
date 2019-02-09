@@ -44,7 +44,7 @@ const Dropfile = ({ onDrop }) => {
                 reader.onerror = function(error) {
                   reject(error);
                 };
-                reader.readAsDataURL(file);
+                reader.readAsArrayBuffer(file);
               })
           )
         )

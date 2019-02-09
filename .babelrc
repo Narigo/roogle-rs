@@ -1,0 +1,13 @@
+{
+  "plugins": [
+    [
+      "@babel/plugin-transform-regenerator",
+      {
+        "asyncGenerators": false,
+        "generators": false,
+        "async": false
+      },
+      "no-regenerator"
+    ]
+  ]
+}
