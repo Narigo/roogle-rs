@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import parsePdf from "parse-pdf";
 import style from "./process.scss";
 import useRustCommand from "../../hooks/use-rust-command.js";
 
@@ -17,10 +16,11 @@ const Process = ({ files }) => {
     let cancelled = false;
     let tmpFile;
 
-    parsePdf(files[0])
+    // pdfParse(files[0])
+    Promise.resolve({ text: "hello" })
       .then(
-        checkCancelled(parsed => {
-          const text = parsed.pages.reduce((allText, page) => `${allText}\n${page.text}`, "");
+        checkCancelled(data => {
+          const text = data.text;
           setProgress("process-text");
           return splitTextIntoSentences({ text, log });
         })
