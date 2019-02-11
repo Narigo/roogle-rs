@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import parsePdf from "parse-pdf";
 import style from "./process.scss";
 import useRustCommand from "../../hooks/use-rust-command.js";
 
@@ -16,19 +17,14 @@ const Process = ({ files }) => {
     let cancelled = false;
     let tmpFile;
 
-    // pdfParse(files[0])
-    Promise.resolve({ text: "hello" })
+    console.log("parsing files", files);
+    parsePdf(files[0])
       .then(
         checkCancelled(data => {
-          const text = data.text;
+          console.log("parsed data!", data);
+          const text = data.pages.reduce((text, page) => `${text}\n${page.text}`, "");
           setProgress("process-text");
           return splitTextIntoSentences({ text, log });
-        })
-      )
-      .then(
-        checkCancelled(sentences => {
-          setProgress("remove-tmp-file");
-          return removeTmpFile({ file: tmpFile, log }).then(() => sentences);
         })
       )
       .then(
@@ -39,10 +35,8 @@ const Process = ({ files }) => {
       )
       .catch(error => {
         console.log("catched!", error);
-        if (error.message === "cancelled") {
-          if (tmpFile) {
-            return removeTmpFile({ file: tmpFile, log });
-          }
+        if (error.message !== "cancelled") {
+          throw error;
         }
       });
     return () => {
@@ -63,12 +57,8 @@ const Process = ({ files }) => {
     <div className={style.root}>
       {progress === "start" ? (
         <div>Creating temp file from binary in Rust</div>
-      ) : progress === "tmp-file-created" ? (
-        <div>temp file created, reading PDF</div>
       ) : progress === "process-text" ? (
         <div>Selecting sentences</div>
-      ) : progress === "remove-tmp-file" ? (
-        <div>Cleaning up and continue to show results</div>
       ) : (
         <div>{sentences}</div>
       )}
@@ -78,31 +68,8 @@ const Process = ({ files }) => {
 
 export default Process;
 
-function createTmpFile({ log }) {
-  console.log(`called writeTmpFile()`);
-  return new Promise(resolve => {
-    log("is this actually sync?");
-    setTimeout(() => resolve("/tmp/someFile"), 2000);
-  });
-}
-function readPdfIntoText({ file, log }) {
-  console.log(`called readPdfIntoText(${file})`);
-  return new Promise(resolve => {
-    log("reading pdf");
-    setTimeout(() => resolve("This is a test. Hello, good morning! Another test sentence."), 2000);
-  });
-}
 function splitTextIntoSentences({ text, log }) {
   console.log(`called splitTextIntoSentences(${text})`);
-  return new Promise(resolve => {
-    log("splitting text");
-    setTimeout(() => resolve(["This is a test", "Hello good morning", "Another test sentence"]), 2000);
-  });
-}
-function removeTmpFile({ file, log }) {
-  console.log(`called removeTmpFile(${file})`);
-  return new Promise(resolve => {
-    log("removing tempfile");
-    setTimeout(resolve, 2000);
-  });
+  log("splitting text");
+  return text.split(/([.!;:]+\s+)/g);
 }

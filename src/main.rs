@@ -27,7 +27,6 @@ fn main() {
                 SplitText { text } => println!("split {}", text),
                 RemoveTmpFile { text } => println!("remove {}", text),
                 LogLong { text } => {
-                    sleep_ms(15000);
                     println!("{}", text)
                 }
             }

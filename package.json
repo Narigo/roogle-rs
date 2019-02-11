@@ -24,14 +24,19 @@
   },
   "homepage": "https://github.com/Narigo/roogle-rs#readme",
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-transform-runtime": "^7.2.0",
     "classnames": "^2.2.6",
     "inline-assets": "^1.4.2",
     "parcel-bundler": "^1.11.0",
     "parcel-plugin-inliner": "^1.0.3",
+    "parse-pdf": "^1.0.0",
     "postcss-modules": "^1.4.1",
-    "react": "^16.8.0-alpha.1",
-    "react-dom": "^16.8.0-alpha.1",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
     "sass": "^1.16.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "babel-polyfill": "^6.26.0"
+  }
 }
