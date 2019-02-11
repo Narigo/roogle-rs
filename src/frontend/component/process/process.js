@@ -7,15 +7,9 @@ const Process = ({ files }) => {
   const [sentences, setSentences] = useState(null);
   const [progress, setProgress] = useState("start");
   const log = useRustCommand("log");
-  const logLong = useRustCommand("logLong");
-  const createFile = useRustCommand("createTmpFile");
-  const readPdf = useRustCommand("readPdf");
-  const splitText = useRustCommand("splitText");
-  const removeFile = useRustCommand("removeTmpFile");
 
   useEffect(() => {
     let cancelled = false;
-    let tmpFile;
 
     console.log("parsing files", files);
     parsePdf(files[0])
@@ -29,8 +23,14 @@ const Process = ({ files }) => {
       )
       .then(
         checkCancelled(sentences => {
+          setProgress("selecting-sentences");
+          return selectSentences({ sentences });
+        })
+      )
+      .then(
+        checkCancelled(sentences => {
+          setSentences(sentences);
           setProgress("done");
-          return setSentences(sentences);
         })
       )
       .catch(error => {
@@ -58,9 +58,11 @@ const Process = ({ files }) => {
       {progress === "start" ? (
         <div>Creating temp file from binary in Rust</div>
       ) : progress === "process-text" ? (
+        <div>Processing text</div>
+      ) : progress === "selecting-sentences" ? (
         <div>Selecting sentences</div>
       ) : (
-        <div>{sentences}</div>
+        <div>{sentences.join("<br />")}</div>
       )}
     </div>
   );
@@ -71,5 +73,21 @@ export default Process;
 function splitTextIntoSentences({ text, log }) {
   console.log(`called splitTextIntoSentences(${text})`);
   log("splitting text");
-  return text.split(/([.!;:]+\s+)/g);
+  return text.split(/[:.!?\n]+/g);
+}
+
+function selectSentences({ amountOfSentences = 5, minimumLengthOfSentence = 50, sentences }) {
+  const selected = [];
+  const possibleSentences = sentences.filter(minLength(minimumLengthOfSentence));
+  const chunkSize = possibleSentences.length / amountOfSentences;
+  for (let i = 0; i < amountOfSentences; i++) {
+    selected.push(possibleSentences[i * chunkSize + Math.floor(Math.random() * chunkSize)]);
+  }
+  return selected;
+}
+
+function minLength(minimumLengthOfSentence) {
+  return sentence => {
+    return sentence.length > minimumLengthOfSentence;
+  };
 }

@@ -15,6 +15,7 @@ const App = () => {
       <header className={style.header} onClick={() => setFiles(null)}>
         <h1>Welcome to Roogle.</h1>
         <p>This is a description about roogle.</p>
+        <p>Right now, it selects 5 random sentences from the PDF. If you click the header, Roogle will reset.</p>
       </header>
       {files === null ? (
         <Dropfile
