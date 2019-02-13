@@ -3,10 +3,12 @@ import style from "./app.scss";
 
 import { Dropfile } from "../dropfile";
 import { Process } from "../process";
+import { Result } from "../result";
 import useRustCommand from "../../hooks/use-rust-command";
 
 const App = () => {
   const [files, setFiles] = useState(null);
+  const [sentences, setSentences] = useState(null);
   const log = useRustCommand("log");
   console.log("App render");
 
@@ -24,8 +26,10 @@ const App = () => {
             setFiles(files);
           }}
         />
+      ) : sentences === null ? (
+        <Process files={files} onDone={sentences => setSentences(sentences)} />
       ) : (
-        <Process files={files} />
+        <Result sentences={sentences} />
       )}
     </div>
   );

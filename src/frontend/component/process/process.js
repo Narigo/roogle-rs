@@ -3,8 +3,7 @@ import parsePdf from "parse-pdf";
 import style from "./process.scss";
 import useRustCommand from "../../hooks/use-rust-command.js";
 
-const Process = ({ files }) => {
-  const [sentences, setSentences] = useState(null);
+const Process = ({ files, onDone }) => {
   const [progress, setProgress] = useState("start");
   const log = useRustCommand("log");
 
@@ -29,8 +28,8 @@ const Process = ({ files }) => {
       )
       .then(
         checkCancelled(sentences => {
-          setSentences(sentences);
           setProgress("done");
+          onDone(sentences);
         })
       )
       .catch(error => {
@@ -62,7 +61,7 @@ const Process = ({ files }) => {
       ) : progress === "selecting-sentences" ? (
         <div>Selecting sentences</div>
       ) : (
-        <div>{sentences.join("<br />")}</div>
+        <div>Done processing!</div>
       )}
     </div>
   );
