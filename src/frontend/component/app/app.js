@@ -10,6 +10,7 @@ const App = () => {
   const [files, setFiles] = useState(null);
   const [sentences, setSentences] = useState(null);
   const log = useRustCommand("log");
+
   console.log("App render");
 
   return (
