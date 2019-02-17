@@ -20,9 +20,9 @@ fn main() {
             match serde_json::from_str(arg).unwrap() {
                 Init => println!("this would be the init handler"),
                 Log { text } => println!("{}", text),
-                OpenUrl { text } => {
+                FetchUrl { text } => {
                     println!("open_url( {} )", text);
-                    open_url(webview, text)
+                    fetch_url(webview, text)?;
                 }
             }
             Ok(())
@@ -35,15 +35,14 @@ fn main() {
 pub enum Cmd {
     Init,
     Log { text: String },
-    OpenUrl { text: String },
+    FetchUrl { text: String },
 }
 
-fn open_url<T>(wv: &mut WebView<T>, url: String) {
-    println!("closing window!");
-    wv.terminate();
-    println!("closed web_view?");
+fn fetch_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
+    println!("should retrieve url {}", url);
 
-    println!("should open new web_view: {}", url);
+    wv.eval(&format!("updateResult('{}')", "hello world"))
+
     // web_view::builder()
     //     .title("Roogle")
     //     .content(Content::Url(url))
@@ -56,7 +55,7 @@ fn open_url<T>(wv: &mut WebView<T>, url: String) {
     //         match serde_json::from_str(arg).unwrap() {
     //             Init => println!("this would be the init handler"),
     //             Log { text } => println!("{}", text),
-    //             OpenUrl { text } => {
+    //             FetchUrl { text } => {
     //                 println!("{}", text);
     //                 open_url(webview, text)
     //             }
