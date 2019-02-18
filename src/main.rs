@@ -2,6 +2,7 @@
 
 #[macro_use]
 extern crate serde_derive;
+extern crate reqwest;
 extern crate serde_json;
 extern crate web_view;
 
@@ -40,6 +41,7 @@ pub enum Cmd {
 
 fn fetch_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
     println!("should retrieve url {}", url);
+    let body = reqwest::get(&format!("{}", url)).unwrap().text().unwrap();
 
-    wv.eval(&format!("updateResult('{}')", "hello world"))
+    wv.eval(&format!("updateResult('{}')", body))
 }
