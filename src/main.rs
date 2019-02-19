@@ -42,6 +42,9 @@ pub enum Cmd {
 fn fetch_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
     println!("should retrieve url {}", url);
     let body = reqwest::get(&format!("{}", url)).unwrap().text().unwrap();
+    let result = format!("updateResult('{}')", body.replace("'", "\\'"));
 
-    wv.eval(&format!("updateResult('{}')", body))
+    println!("result: {}", result);
+
+    wv.eval(&result)
 }
