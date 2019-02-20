@@ -4,8 +4,10 @@
 extern crate serde_derive;
 extern crate reqwest;
 extern crate serde_json;
+extern crate url;
 extern crate web_view;
 
+use url::form_urlencoded::byte_serialize;
 use web_view::*;
 
 fn main() {
@@ -42,7 +44,8 @@ pub enum Cmd {
 fn fetch_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
     println!("should retrieve url {}", url);
     let body = reqwest::get(&format!("{}", url)).unwrap().text().unwrap();
-    let result = format!("updateResult('{}')", body.replace("'", "\\'"));
+    let encoded: String = byte_serialize(body.as_bytes()).collect();
+    let result = format!("updateResult('{}')", encoded);
 
     println!("result: {}", result);
 
