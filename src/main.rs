@@ -3,10 +3,12 @@
 #[macro_use]
 extern crate serde_derive;
 extern crate reqwest;
+extern crate scraper;
 extern crate serde_json;
 extern crate url;
 extern crate web_view;
 
+use scraper::{Html, Selector};
 use url::form_urlencoded::byte_serialize;
 use web_view::*;
 
@@ -43,9 +45,16 @@ pub enum Cmd {
 
 fn fetch_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
     println!("should retrieve url {}", url);
-    let body = reqwest::get(&format!("{}", url)).unwrap().text().unwrap();
-    let encoded: String = byte_serialize(body.as_bytes()).collect();
-    let result = format!("updateResult('{}')", encoded);
+    let resource = reqwest::get(&format!("{}", url)).unwrap().text().unwrap();
+    let html = Html::parse_fragment(&resource);
+    let ul_selector = Selector::parse("ul").unwrap();
+    let li_selector = Selector::parse("li").unwrap();
+    let list = html.select(&ul_selector).next().unwrap();
+    let mut list_elements = "".to_owned();
+    for element in list.select(&li_selector) {
+        list_elements = list_elements + "\"" + element.value().name() + "\",";
+    }
+    let result = format!("updateResult([{}])", list_elements);
 
     println!("result: {}", result);
 
