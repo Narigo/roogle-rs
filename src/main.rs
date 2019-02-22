@@ -9,7 +9,6 @@ extern crate url;
 extern crate web_view;
 
 use scraper::{Html, Selector};
-use url::form_urlencoded::byte_serialize;
 use web_view::*;
 
 fn main() {
