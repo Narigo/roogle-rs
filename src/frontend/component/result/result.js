@@ -7,9 +7,11 @@ const Result = ({ sentences }) => {
   const [result, setResult] = useState(null);
 
   useEffect(() => {
-    const url = `https://www.google.de/search?q=${encodeURIComponent(sentences[0])}`;
-    window.updateResult = setResult;
-    fetchUrl(url);
+    if (!result) {
+      const url = `https://www.google.de/search?q=${encodeURIComponent(sentences[0])}`;
+      window.updateResult = setResult;
+      fetchUrl(url);
+    }
   });
   return <div className={style.root}>{result === null ? "Waiting for result" : result}</div>;
 };
