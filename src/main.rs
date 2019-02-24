@@ -1,5 +1,6 @@
 #![windows_subsystem = "windows"]
 
+extern crate base64;
 #[macro_use]
 extern crate serde_derive;
 extern crate reqwest;
@@ -51,7 +52,8 @@ fn fetch_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
     let list = html.select(&ul_selector).next().unwrap();
     let mut list_elements = "".to_owned();
     for element in list.select(&li_selector) {
-        list_elements = list_elements + "\"" + element.value().name() + "\",";
+        let encodedPart = base64::encode(element.inner_html().as_bytes());
+        list_elements = list_elements + "\"" + encodedPart.as_str() + "\",";
     }
     let result = format!("updateResult([{}])", list_elements);
 

@@ -5,6 +5,7 @@ authors = ["Joern Bernhardt <joern.bernhardt@googlemail.com>"]
 publish = false
 
 [dependencies]
+base64 = "0.10"
 reqwest = "0.9"
 scraper = "0.8"
 serde = "1.0"
