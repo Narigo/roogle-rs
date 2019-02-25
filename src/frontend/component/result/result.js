@@ -9,13 +9,15 @@ const Result = ({ sentences }) => {
   useEffect(() => {
     if (!result) {
       const url = `https://www.google.de/search?q=${encodeURIComponent(sentences[0])}`;
-      window.updateResult = setResult;
+      window.updateResult = arr => setResult(arr.map(blob => atob(blob)));
       fetchUrl(url);
     }
   });
 
   return (
-    <div className={style.root}>{result === null ? "Waiting for result" : result.map(r => atob(r)).join("<br />")}</div>
+    <div className={style.root}>
+      {result === null ? "Waiting for result" : <div dangerouslySetInnerHTML={{ __html: result }} />}
+    </div>
   );
 };
 
