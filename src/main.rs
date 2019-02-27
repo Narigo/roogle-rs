@@ -57,7 +57,5 @@ fn fetch_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
     }
     let result = format!("updateResult([{}])", list_elements);
 
-    println!("result: {}", result);
-
     wv.eval(&result)
 }
