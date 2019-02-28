@@ -30,7 +30,11 @@ const App = () => {
       ) : sentences === null ? (
         <Process files={files} onDone={sentences => setSentences(sentences)} />
       ) : (
-        <Result sentences={sentences} />
+        <div className={style.tabs}>
+          {sentences.map(sentence => (
+            <Result key={sentence} sentence={sentence} />
+          ))}
+        </div>
       )}
     </div>
   );
