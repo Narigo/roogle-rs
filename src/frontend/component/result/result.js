@@ -9,7 +9,8 @@ const Result = ({ sentence }) => {
   useEffect(() => {
     if (!result) {
       const url = `https://www.google.de/search?q=${encodeURIComponent(sentence)}`;
-      window.updateResult = arr => setResult(arr.map(blob => atob(blob)));
+      window.updateResult = window.updateResult || {};
+      window.updateResult[url] = arr => setResult(arr.map(blob => atob(blob)));
       fetchUrl(url);
     }
   });

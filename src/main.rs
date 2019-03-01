@@ -55,7 +55,7 @@ fn fetch_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
         let encoded_part = base64::encode(element.inner_html().as_bytes());
         list_elements = list_elements + "\"" + encoded_part.as_str() + "\",";
     }
-    let result = format!("updateResult([{}])", list_elements);
+    let result = format!("updateResult['{}']([{}])", url, list_elements);
 
     wv.eval(&result)
 }
