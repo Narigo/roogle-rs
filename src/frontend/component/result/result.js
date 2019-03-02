@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Typography from "@material-ui/core/Typography";
 import style from "./result.scss";
 import useRustCommand from "../../hooks/use-rust-command";
 
@@ -17,7 +18,9 @@ const Result = ({ sentence }) => {
 
   return (
     <div className={style.root}>
-      {result === null ? `Waiting for result for: ${sentence}` : <div dangerouslySetInnerHTML={{ __html: result }} />}
+      <Typography>
+        {result === null ? `Waiting for result for: ${sentence}` : <div dangerouslySetInnerHTML={{ __html: result }} />}
+      </Typography>
     </div>
   );
 };

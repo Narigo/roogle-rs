@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Typography from "@material-ui/core/Typography";
 import parsePdf from "parse-pdf";
 import style from "./process.scss";
 import useRustCommand from "../../hooks/use-rust-command.js";
@@ -54,15 +55,15 @@ const Process = ({ files, onDone }) => {
   }, [files]);
   return (
     <div className={style.root}>
-      {progress === "start" ? (
-        <div>Creating temp file from binary in Rust</div>
-      ) : progress === "process-text" ? (
-        <div>Processing text</div>
-      ) : progress === "selecting-sentences" ? (
-        <div>Selecting sentences</div>
-      ) : (
-        <div>Done processing!</div>
-      )}
+      <Typography>
+        {progress === "start"
+          ? "Creating temp file from binary in Rust"
+          : progress === "process-text"
+          ? "Processing text"
+          : progress === "selecting-sentences"
+          ? "Selecting sentences"
+          : "Done processing!"}
+      </Typography>
     </div>
   );
 };
