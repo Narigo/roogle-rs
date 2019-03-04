@@ -40,7 +40,7 @@ const App = () => {
           <Grid item xs>
             <Divider variant="middle" />
           </Grid>
-          <Grid item xs>
+          <Grid container xs alignContent="stretch" alignItems="stretch">
             {files === null ? (
               <Dropfile
                 onDrop={files => {
