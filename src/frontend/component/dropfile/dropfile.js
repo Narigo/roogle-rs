@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import cn from "classnames";
 import style from "./dropfile.scss";
 import useRustCommand from "../../hooks/use-rust-command";
+import Grid from "@material-ui/core/Grid";
 
 const Dropfile = ({ onDrop }) => {
   const [dragOver, setDragOver] = useState(false);
   const log = useRustCommand("log");
   console.log("dropfile render");
   return (
-    <div
+    <Grid
       className={cn(style.root, dragOver && style.dragOver)}
       onClick={() => log("something clicked.")}
       onDragOver={event => {
@@ -53,7 +54,7 @@ const Dropfile = ({ onDrop }) => {
       }}
     >
       Drop a PDF file here
-    </div>
+    </Grid>
   );
 };
 
