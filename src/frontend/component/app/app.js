@@ -27,7 +27,7 @@ const App = () => {
     <Fragment>
       <CssBaseline />
       <Grid container direction="column" className={style.root} zeroMinWidth>
-        <Grid component="header" item xs onClick={() => setFiles(null)}>
+        <Grid component="header" item xs onClick={() => setFiles(null)} className={style.header}>
           <Typography align="center" variant="title" noWrap>
             Welcome to Roogle.
           </Typography>
@@ -36,10 +36,8 @@ const App = () => {
             Right now, it selects 5 random sentences from the PDF. If you click the header, Roogle will reset.
           </Typography>
         </Grid>
-        <Grid item xs>
-          <Divider variant="middle" />
-        </Grid>
-        <Grid item xs>
+        <Divider variant="middle" />
+        <Grid item xs className={style.dropzone}>
           {files === null ? (
             <Dropfile
               onDrop={files => {
