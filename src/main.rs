@@ -13,26 +13,31 @@ use scraper::{Html, Selector};
 use web_view::*;
 
 fn main() {
-    web_view::builder()
-        .title("Roogle")
-        .content(Content::Html(include_str!("../dist/index.html")))
-        .size(800, 600)
-        .resizable(true)
-        .debug(true)
-        .user_data(())
-        .invoke_handler(|webview, arg| {
-            use Cmd::*;
-            match serde_json::from_str(arg).unwrap() {
-                Init => println!("this would be the init handler"),
-                Log { text } => println!("{}", text),
-                FetchUrl { text } => {
-                    println!("open_url( {} )", text);
-                    fetch_url(webview, text)?;
-                }
-            }
-            Ok(())
-        }).run()
-        .unwrap();
+    start_web_server()
+        .map(|server| {
+            web_view::builder()
+                .title("Roogle")
+                .content(Content::Url(format!(
+                    "http://{}:{}/index.html",
+                    server.domain, server.port
+                ))).size(800, 600)
+                .resizable(true)
+                .debug(true)
+                .user_data(())
+                .invoke_handler(|webview, arg| {
+                    use Cmd::*;
+                    match serde_json::from_str(arg).unwrap() {
+                        Init => println!("this would be the init handler"),
+                        Log { text } => println!("{}", text),
+                        FetchUrl { text } => {
+                            println!("open_url( {} )", text);
+                            fetch_url(webview, text)?;
+                        }
+                    }
+                    Ok(())
+                }).run()
+                .unwrap();
+        }).unwrap();
 }
 
 #[derive(Deserialize)]
@@ -58,4 +63,16 @@ fn fetch_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
     let result = format!("updateResult['{}']([{}])", url, list_elements);
 
     wv.eval(&result)
+}
+
+struct Server {
+    domain: String,
+    port: u16,
+}
+
+fn start_web_server() -> Result<Server, &'static str> {
+    Ok(Server {
+        domain: String::from("localhost"),
+        port: 1234,
+    })
 }
