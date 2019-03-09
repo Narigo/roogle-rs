@@ -1,7 +1,6 @@
 import React, { useState, Fragment } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
@@ -26,7 +25,7 @@ const App = () => {
   return (
     <Fragment>
       <CssBaseline />
-      <Grid container direction="column" className={style.root} zeroMinWidth>
+      <Grid container direction="column" className={style.root}>
         <Grid component="header" item xs onClick={() => setFiles(null)} className={style.header}>
           <Typography align="center" variant="title" noWrap>
             Welcome to Roogle.
@@ -36,7 +35,6 @@ const App = () => {
             Right now, it selects 5 random sentences from the PDF. If you click the header, Roogle will reset.
           </Typography>
         </Grid>
-        <Divider variant="middle" />
         <Grid item xs className={style.dropzone}>
           {files === null ? (
             <Dropfile
