@@ -48,10 +48,11 @@ const App = () => {
           ) : (
             <Fragment>
               <AppBar position="static">
-                <Tabs value={currentTab} onChange={setCurrentTab} variant="fullWidth">
-                  {sentences.map((sentence, index) => (
-                    <Tab key={index} label={sentence} />
-                  ))}
+                <Tabs value={currentTab} onChange={(_event, value) => setCurrentTab(value)} variant="fullWidth">
+                  {sentences.map((sentence, index) => {
+                    console.log({ sentence, index });
+                    return <Tab key={index} label={sentence} />;
+                  })}
                 </Tabs>
               </AppBar>
               {sentences.map(

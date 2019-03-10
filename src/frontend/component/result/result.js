@@ -11,7 +11,9 @@ const Result = ({ sentence }) => {
     if (!result) {
       const url = `https://www.google.de/search?q=${encodeURIComponent(sentence)}`;
       window.updateResult = window.updateResult || {};
-      window.updateResult[url] = arr => setResult(arr.map(blob => atob(blob)));
+      window.updateResult[url] = arr => {
+        setResult(arr.map(blob => atob(blob)));
+      };
       fetchUrl(url);
     }
   });
