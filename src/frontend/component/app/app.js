@@ -25,7 +25,7 @@ const App = () => {
   return (
     <Fragment>
       <CssBaseline />
-      <Grid container direction="column" className={style.root}>
+      <Grid container direction="column" className={style.root} wrap="nowrap">
         <Grid component="header" item xs onClick={() => setFiles(null)} className={style.header}>
           <Typography align="center" variant="title" noWrap>
             Welcome to Roogle.
