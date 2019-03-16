@@ -8,15 +8,13 @@ const Result = ({ sentence }) => {
   const [result, setResult] = useState(null);
 
   useEffect(() => {
-    if (!result) {
-      const url = `https://www.google.de/search?q=${encodeURIComponent(sentence)}`;
-      window.updateResult = window.updateResult || {};
-      window.updateResult[url] = arr => {
-        setResult(arr.map(blob => atob(blob)));
-      };
-      fetchUrl(url);
-    }
-  });
+    const url = `https://www.google.de/search?q=${encodeURIComponent(sentence)}`;
+    window.updateResult = window.updateResult || {};
+    window.updateResult[url] = arr => {
+      setResult(arr.map(blob => atob(blob)));
+    };
+    fetchUrl(url);
+  }, [sentence]);
 
   return (
     <div className={style.root}>
