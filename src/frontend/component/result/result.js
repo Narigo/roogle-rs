@@ -11,6 +11,7 @@ const Result = ({ sentence }) => {
     const url = `https://www.google.de/search?q=${encodeURIComponent(sentence)}`;
     window.updateResult = window.updateResult || {};
     window.updateResult[url] = arr => {
+      // TODO: Do the conversion of the resulting html in JS instead of Rust
       setResult(arr.map(blob => atob(blob)));
     };
     fetchUrl(url);

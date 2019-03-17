@@ -49,7 +49,7 @@ pub enum Cmd {
 }
 
 fn fetch_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
-    println!("should retrieve url {}", url);
+    println!("Retrieving url {}", url);
     let resource = reqwest::get(&format!("{}", url)).unwrap().text().unwrap();
     let html = Html::parse_fragment(&resource);
     let ol_selector = Selector::parse("#search ol").unwrap();
