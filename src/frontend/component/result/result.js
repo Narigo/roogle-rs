@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import cheerio from "cheerio";
 import Typography from "@material-ui/core/Typography";
 import style from "./result.scss";
 import useRustCommand from "../../hooks/use-rust-command";
@@ -10,9 +11,11 @@ const Result = ({ sentence }) => {
   useEffect(() => {
     const url = `https://www.google.de/search?q=${encodeURIComponent(sentence)}`;
     window.updateResult = window.updateResult || {};
-    window.updateResult[url] = arr => {
-      // TODO: Do the conversion of the resulting html in JS instead of Rust
-      setResult(arr.map(blob => atob(blob)));
+    window.updateResult[url] = blob => {
+      const data = atob(blob);
+      console.log("updateResult", { data });
+      const $ = cheerio.load(data);
+      setResult($("#search ol").find("div"));
     };
     fetchUrl(url);
   }, [sentence]);
