@@ -25,10 +25,9 @@ fn main() {
                 .invoke_handler(|webview, arg| {
                     use Cmd::*;
                     match serde_json::from_str(arg).unwrap() {
-                        Init => println!("this would be the init handler"),
+                        Init => {}
                         Log { text } => println!("{}", text),
                         FetchUrl { text } => {
-                            println!("open_url( {} )", text);
                             fetch_url(webview, text)?;
                         }
                     }
@@ -49,7 +48,11 @@ pub enum Cmd {
 fn fetch_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
     println!("Retrieving url {}", url);
     let resource = reqwest::get(&format!("{}", url)).unwrap().text().unwrap();
-    let result = format!("updateResult['{}']('{}')", url, base64::encode(resource.as_bytes()));
+    let result = format!(
+        "updateResult['{}']('{}')",
+        url,
+        base64::encode(resource.as_bytes())
+    );
 
     wv.eval(&result)
 }
