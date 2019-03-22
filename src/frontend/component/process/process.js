@@ -71,7 +71,6 @@ const Process = ({ files, onDone }) => {
 export default Process;
 
 function splitTextIntoSentences({ text, log }) {
-  console.log(`called splitTextIntoSentences(${text})`);
   log("splitting text");
   return text.split(/[:.!?\n]+/g);
 }

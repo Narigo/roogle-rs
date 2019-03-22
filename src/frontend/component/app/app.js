@@ -20,8 +20,6 @@ const App = () => {
   const [sentences, setSentences] = useState(null);
   const log = useRustCommand("log");
 
-  console.log("App render");
-
   return (
     <Fragment>
       <CssBaseline />
@@ -50,7 +48,6 @@ const App = () => {
               <AppBar position="static">
                 <Tabs value={currentTab} onChange={(_event, value) => setCurrentTab(value)} variant="fullWidth">
                   {sentences.map((sentence, index) => {
-                    console.log({ sentence, index });
                     return <Tab key={index} label={sentence} />;
                   })}
                 </Tabs>

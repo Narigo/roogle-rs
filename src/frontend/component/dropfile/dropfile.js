@@ -8,7 +8,6 @@ import Typography from "@material-ui/core/Typography";
 const Dropfile = ({ onDrop }) => {
   const [dragOver, setDragOver] = useState(false);
   const log = useRustCommand("log");
-  console.log("dropfile render");
   const onDropHandler = event => {
     event.preventDefault();
     const files = [];

@@ -13,7 +13,7 @@ const Result = ({ sentence }) => {
     window.updateResult = window.updateResult || {};
     window.updateResult[url] = blob => {
       const data = atob(blob);
-      console.log("updateResult", { data });
+      console.log("updateResult", data);
       const $ = cheerio.load(data);
       setResult($("#search ol").find("div"));
     };
