@@ -6,6 +6,7 @@ import useRustCommand from "../../hooks/use-rust-command";
 
 const Result = ({ sentence }) => {
   const fetchUrl = useRustCommand("fetchUrl");
+  const log = useRustCommand("log");
   const [result, setResult] = useState(null);
 
   useEffect(() => {
@@ -13,7 +14,7 @@ const Result = ({ sentence }) => {
     window.updateResult = window.updateResult || {};
     window.updateResult[url] = blob => {
       const data = atob(blob);
-      console.log("updateResult", data);
+      log(data);
       const $ = cheerio.load(data);
       setResult($("#search ol").find("div"));
     };
