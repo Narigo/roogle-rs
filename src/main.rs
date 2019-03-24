@@ -8,6 +8,7 @@ extern crate serde_json;
 extern crate url;
 extern crate web_view;
 
+use std::io::Read;
 use web_view::*;
 
 fn main() {
@@ -47,7 +48,10 @@ pub enum Cmd {
 
 fn fetch_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
     println!("Retrieving url {}", url);
-    let resource = reqwest::get(&format!("{}", url)).unwrap().text().unwrap();
+    let mut resource = reqwest::get(&format!("{}", url))?;
+    let mut body = String::new();
+    resource.read_to_string(&mut body)?;
+
     let result = format!(
         "updateResult['{}']('{}')",
         url,
