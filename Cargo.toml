@@ -6,6 +6,7 @@ publish = false
 
 [dependencies]
 base64 = "0.10"
+error-chain = "0.12"
 reqwest = "0.9"
 serde = "1.0"
 serde_derive = "1.0"
