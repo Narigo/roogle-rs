@@ -8,18 +8,18 @@ extern crate serde_json;
 extern crate url;
 extern crate web_view;
 
-#[macro_use]
-extern crate error_chain;
-
-error_chain!{
-    foreign_links {
-        Io(std::io::Error);
-        Reqwest(reqwest::Error);
-        WebView(web_view::Error);
-    }
-}
-
+// #[macro_use]
+// extern crate error_chain;
+// use error_chain::*;
 use web_view::*;
+
+// error_chain!{
+//     foreign_links {
+//         Io(std::io::Error);
+//         Reqwest(reqwest::Error);
+//         WVResult(web_view::Error);
+//     }
+// }
 
 fn main() {
     start_web_server()
@@ -58,14 +58,12 @@ pub enum Cmd {
 
 fn fetch_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
     println!("Retrieving url {}", url);
-    let mut resource = reqwest::get(&url.as_str())?;
-    let mut body = String::new();
-    resource.read_to_string(&mut body)?;
+    let body = reqwest::get(url.as_str()).unwrap().text().unwrap();
 
     let result = format!(
         "updateResult['{}']('{}')",
         url,
-        base64::encode(resource.as_bytes())
+        base64::encode(body.as_bytes())
     );
 
     wv.eval(&result)
@@ -76,7 +74,7 @@ struct Server {
     port: u16,
 }
 
-fn start_web_server() -> Result<Server> {
+fn start_web_server() -> Result<Server, &'static str> {
     Ok(Server {
         domain: String::from("localhost"),
         port: 1234,
