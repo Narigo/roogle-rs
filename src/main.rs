@@ -8,18 +8,7 @@ extern crate serde_json;
 extern crate url;
 extern crate web_view;
 
-// #[macro_use]
-// extern crate error_chain;
-// use error_chain::*;
 use web_view::*;
-
-// error_chain!{
-//     foreign_links {
-//         Io(std::io::Error);
-//         Reqwest(reqwest::Error);
-//         WVResult(web_view::Error);
-//     }
-// }
 
 fn main() {
     start_web_server()
