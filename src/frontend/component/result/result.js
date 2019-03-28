@@ -16,7 +16,7 @@ const Result = ({ sentence }) => {
       const data = atob(blob);
       log(data);
       const $ = cheerio.load(data);
-      setResult($("#search ol").find("div"));
+      setResult($("#search ol .s").find("div"));
     };
     fetchUrl(url);
   }, [sentence]);
