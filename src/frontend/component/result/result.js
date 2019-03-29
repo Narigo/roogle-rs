@@ -16,16 +16,28 @@ const Result = ({ sentence }) => {
       const data = atob(blob);
       log(data);
       const $ = cheerio.load(data);
-      setResult($("#search ol .s").find("div"));
+      const $searchResults = $("#search ol .g");
+      const searchResults = $searchResults.map(elem => ({
+        url: $(elem).find("cite").text(),
+        description: $(elem).find(".st").text()
+      }));
+      setResult(searchResults);
     };
     fetchUrl(url);
   }, [sentence]);
 
   return (
     <div className={style.root}>
-      <Typography>
-        {result === null ? `Waiting for result for: ${sentence}` : <div dangerouslySetInnerHTML={{ __html: result }} />}
-      </Typography>
+      {result === null ? (
+        <Typography>`Waiting for result for: ${sentence}`</Typography>
+      ) : (
+        result.map((e, i) => (
+          <div key={i}>
+            <div>URL: {e.url}</div>
+            <div>Description: {e.description}</div>
+          </div>
+        ))
+      )}
     </div>
   );
 };
