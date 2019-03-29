@@ -17,10 +17,14 @@ const Result = ({ sentence }) => {
       log(data);
       const $ = cheerio.load(data);
       const $searchResults = $("#search ol .g");
-      const searchResults = $searchResults.map(elem => ({
-        url: $(elem).find("cite").text(),
-        description: $(elem).find(".st").text()
-      }));
+      const searchResults = $searchResults.map((_index, elem) => {
+        const $elem = $(elem);
+        return {
+          url: $elem.find("cite").text(),
+          description: $elem.find(".st").text()
+        };
+      }).get();
+      console.log("searchResults", searchResults);
       setResult(searchResults);
     };
     fetchUrl(url);
