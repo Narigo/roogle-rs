@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import cheerio from "cheerio";
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import style from "./result.scss";
 import useRustCommand from "../../hooks/use-rust-command";
@@ -17,13 +18,15 @@ const Result = ({ sentence }) => {
       log(data);
       const $ = cheerio.load(data);
       const $searchResults = $("#search ol .g");
-      const searchResults = $searchResults.map((_index, elem) => {
-        const $elem = $(elem);
-        return {
-          url: $elem.find("cite").text(),
-          description: $elem.find(".st").text()
-        };
-      }).get();
+      const searchResults = $searchResults
+        .map((_index, elem) => {
+          const $elem = $(elem);
+          return {
+            url: $elem.find("cite").text(),
+            description: $elem.find(".st").text()
+          };
+        })
+        .get();
       console.log("searchResults", searchResults);
       setResult(searchResults);
     };
@@ -36,10 +39,12 @@ const Result = ({ sentence }) => {
         <Typography>`Waiting for result for: ${sentence}`</Typography>
       ) : (
         result.map((e, i) => (
-          <div key={i}>
-            <div>URL: {e.url}</div>
-            <div>Description: {e.description}</div>
-          </div>
+          <Grid container key={i}>
+            <Grid>
+              <Typography>URL: {e.url}</Typography>
+            </Grid>
+            <Grid><div dangerouslySetInnerHTML={{ __html: e.description }} /></Grid>
+          </Grid>
         ))
       )}
     </div>
