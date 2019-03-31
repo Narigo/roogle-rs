@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import cheerio from "cheerio";
+import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import style from "./result.scss";
@@ -23,7 +24,7 @@ const Result = ({ sentence }) => {
           const $elem = $(elem);
           return {
             url: $elem.find("cite").text(),
-            description: $elem.find(".st").text()
+            description: $elem.find(".st").html()
           };
         })
         .get();
@@ -43,7 +44,10 @@ const Result = ({ sentence }) => {
             <Grid>
               <Typography>URL: {e.url}</Typography>
             </Grid>
-            <Grid><div dangerouslySetInnerHTML={{ __html: e.description }} /></Grid>
+            <Grid>
+              <Typography>Description: <span dangerouslySetInnerHTML={{__html:e.description}} /></Typography>
+            </Grid>
+            <Divider />
           </Grid>
         ))
       )}
