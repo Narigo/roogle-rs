@@ -45,7 +45,9 @@ const Result = ({ sentence }) => {
               <Typography>URL: {e.url}</Typography>
             </Grid>
             <Grid>
-              <Typography>Description: <span dangerouslySetInnerHTML={{__html:e.description}} /></Typography>
+              <Typography>
+                Description: <span dangerouslySetInnerHTML={{ __html: e.description }} />
+              </Typography>
             </Grid>
             <Divider />
           </Grid>
