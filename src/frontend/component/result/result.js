@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import cheerio from "cheerio";
-import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import style from "./result.scss";
 import useRustCommand from "../../hooks/use-rust-command";
@@ -39,19 +39,17 @@ const Result = ({ sentence }) => {
       {result === null ? (
         <Typography>`Waiting for result for: ${sentence}`</Typography>
       ) : (
-        result.map((e, i) => (
-          <Grid container key={i}>
-            <Grid>
-              <Typography>URL: {e.url}</Typography>
-            </Grid>
-            <Grid>
-              <Typography>
-                Description: <span dangerouslySetInnerHTML={{ __html: e.description }} />
-              </Typography>
-            </Grid>
-            <Divider />
-          </Grid>
-        ))
+        <Grid container spacing={20}>
+          {result.map((e, i) => (
+            <Paper key={i}>
+              <a href="">
+                <Typography variant="h2">{e.title}</Typography>
+                <Typography paragraph>{e.url}</Typography>
+                <Typography>{e.description}</Typography>
+              </a>
+            </Paper>
+          ))}
+        </Grid>
       )}
     </div>
   );
