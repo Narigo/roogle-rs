@@ -43,11 +43,11 @@ const Result = ({ sentence }) => {
       ) : (
         <Grid container spacing={20}>
           {result.map((e, i) => (
-            <Paper key={i}>
-              <a href="">
+            <Paper className={style.item} key={i}>
+              <a href={e.url}>
                 <Typography variant="h2">{e.title}</Typography>
                 <Typography paragraph>{e.url}</Typography>
-                <Typography>{e.description}</Typography>
+                <Typography paragraph>{e.description}</Typography>
               </a>
             </Paper>
           ))}
