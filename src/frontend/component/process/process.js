@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
 import parsePdf from "parse-pdf";
 import style from "./process.scss";
@@ -53,8 +54,13 @@ const Process = ({ files, onDone }) => {
       };
     }
   }, [files]);
+
+  const completion =
+    progress === "start" ? 0 : progress === "process-text" ? 20 : progress === "selecting-sentences" ? 40 : 50;
+
   return (
     <div className={style.root}>
+      <LinearProgress variant="determinate" value={completion} />
       <Typography>
         {progress === "start"
           ? "Creating temp file from binary in Rust"

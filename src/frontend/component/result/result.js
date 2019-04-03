@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import cheerio from "cheerio";
 import Grid from "@material-ui/core/Grid";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import style from "./result.scss";
@@ -36,6 +37,7 @@ const Result = ({ sentence }) => {
 
   return (
     <div className={style.root}>
+      <LinearProgress variant="determinate" value={result === null ? 50 : 100} />
       {result === null ? (
         <Typography>`Waiting for result for: ${sentence}`</Typography>
       ) : (
