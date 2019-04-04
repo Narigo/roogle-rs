@@ -39,7 +39,7 @@ const Result = ({ sentence }) => {
     <div className={style.root}>
       <LinearProgress variant="determinate" value={result === null ? 50 : 100} />
       {result === null ? (
-        <Typography>`Waiting for result for: ${sentence}`</Typography>
+        <Typography>Waiting for result for: {sentence}</Typography>
       ) : (
         <Grid container spacing={20}>
           {result.map((e, i) => (
