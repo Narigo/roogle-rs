@@ -29,7 +29,6 @@ const Result = ({ sentence }) => {
           };
         })
         .get();
-      console.log("searchResults", searchResults);
       setResult(searchResults);
     };
     fetchUrl(url);
