@@ -52,9 +52,9 @@ const App = () => {
                   })}
                 </Tabs>
               </AppBar>
-              {sentences.map(
-                (sentence, index) => currentTab === index && <Result key={sentence} sentence={sentence} />
-              )}
+              {sentences.map((sentence, index) => (
+                <Result key={sentence} sentence={sentence} show={currentTab === index} />
+              ))}
             </Fragment>
           )}
         </Grid>

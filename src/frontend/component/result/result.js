@@ -6,8 +6,9 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import style from "./result.scss";
 import useRustCommand from "../../hooks/use-rust-command";
+import cn from "classnames";
 
-const Result = ({ sentence }) => {
+const Result = ({ sentence, show }) => {
   const fetchUrl = useRustCommand("fetchUrl");
   const log = useRustCommand("log");
   const [result, setResult] = useState(null);
@@ -35,7 +36,7 @@ const Result = ({ sentence }) => {
   }, [sentence]);
 
   return (
-    <div className={style.root}>
+    <div className={cn(style.root, show && style.show)}>
       <LinearProgress variant="determinate" value={result === null ? 50 : 100} />
       {result === null ? (
         <Typography>Waiting for result for: {sentence}</Typography>

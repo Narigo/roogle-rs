@@ -1,6 +1,11 @@
 .root {
+  display: none;
 }
 
 .item {
   margin: 25px;
+}
+
+.show {
+  display: block;
 }
