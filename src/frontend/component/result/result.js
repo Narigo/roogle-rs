@@ -24,13 +24,18 @@ const Result = ({ sentence, show }) => {
       const searchResults = $searchResults
         .map((_index, elem) => {
           const $elem = $(elem);
+          const $description = $elem.find(".st");
           return {
             url: $elem.find("cite").text(),
-            description: $elem.find(".st").html()
+            description: $description.html(),
+            probability: Math.round((100 * $description.find("b").text().length) / $description.text().length)
           };
         })
         .get();
-      setResult(searchResults);
+      setResult({
+        maxProbability: searchResults.reduce((maxProb, e) => (e.probability > maxProb ? maxProb : e.probability), 0),
+        searchResults: searchResults.sort((a, b) => a.probability - b.probability)
+      });
     };
     fetchUrl(url);
   }, [sentence]);
@@ -42,10 +47,13 @@ const Result = ({ sentence, show }) => {
         <Typography>Waiting for result for: {sentence}</Typography>
       ) : (
         <Grid container spacing={20}>
-          {result.map((e, i) => (
+          <Paper className={style.item}>
+            <Typography variant="h3">Probability of plagiarism: {result.maxProbability} %</Typography>
+            <Typography paragraph>{sentence}</Typography>
+          </Paper>
+          {result.searchResults.map((e, i) => (
             <Paper className={style.item} key={i}>
               <a href={e.url}>
-                <Typography variant="h2">{e.title}</Typography>
                 <Typography paragraph>{e.url}</Typography>
                 <Typography paragraph>{e.description}</Typography>
               </a>
