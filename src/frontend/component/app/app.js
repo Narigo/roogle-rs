@@ -24,7 +24,16 @@ const App = () => {
     <Fragment>
       <CssBaseline />
       <Grid container direction="column" className={style.root} wrap="nowrap">
-        <Grid component="header" item xs onClick={() => setFiles(null)} className={style.header}>
+        <Grid
+          component="header"
+          item
+          xs
+          onClick={() => {
+            setFiles(null);
+            setSentences(null);
+          }}
+          className={style.header}
+        >
           <Typography align="center" variant="title" noWrap>
             Welcome to Roogle.
           </Typography>
@@ -48,7 +57,7 @@ const App = () => {
               <AppBar position="static">
                 <Tabs value={currentTab} onChange={(_event, value) => setCurrentTab(value)} variant="fullWidth">
                   {sentences.map((sentence, index) => {
-                    return <Tab key={index} label={sentence} />;
+                    return <Tab key={index} label={`${sentence.slice(0, 25)}...`} />;
                   })}
                 </Tabs>
               </AppBar>
