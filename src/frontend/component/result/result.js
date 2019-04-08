@@ -25,16 +25,22 @@ const Result = ({ sentence, show }) => {
         .map((_index, elem) => {
           const $elem = $(elem);
           const $description = $elem.find(".st");
+          // console.log({
+          //   sentence,
+          //   boldTextLength: $description.find("b").text().length,
+          //   textLength: $description.text().length,
+          //   probability: Math.round((100 * $description.find("b").text().length) / $description.text().length) || 0
+          // });
           return {
             url: $elem.find("cite").text(),
             description: $description.html(),
-            probability: Math.round((100 * $description.find("b").text().length) / $description.text().length)
+            probability: Math.round((100 * $description.find("b").text().length) / $description.text().length) || 0
           };
         })
         .get();
       setResult({
-        maxProbability: searchResults.reduce((maxProb, e) => (e.probability > maxProb ? maxProb : e.probability), 0),
-        searchResults: searchResults.sort((a, b) => a.probability - b.probability)
+        maxProbability: searchResults.reduce((maxProb, e) => (e.probability > maxProb ? e.probability : maxProb), 0),
+        searchResults: searchResults.sort((a, b) => b.probability - a.probability)
       });
     };
     fetchUrl(url);
@@ -54,7 +60,9 @@ const Result = ({ sentence, show }) => {
           {result.searchResults.map((e, i) => (
             <Paper className={style.item} key={i}>
               <a href={e.url}>
-                <Typography paragraph>{e.url}</Typography>
+                <Typography paragraph>
+                  {e.url} (Probability {e.probability}%)
+                </Typography>
                 <Typography paragraph>{e.description}</Typography>
               </a>
             </Paper>

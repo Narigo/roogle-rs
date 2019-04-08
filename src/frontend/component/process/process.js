@@ -84,11 +84,12 @@ function splitTextIntoSentences({ text, log }) {
 function selectSentences({ amountOfSentences = 5, minimumLengthOfSentence = 50, sentences }) {
   const selected = [];
   const possibleSentences = sentences.filter(minLength(minimumLengthOfSentence));
-  const chunkSize = possibleSentences.length / amountOfSentences;
-  for (let i = 0; i < amountOfSentences; i++) {
-    selected.push(possibleSentences[i * chunkSize + Math.floor(Math.random() * chunkSize)]);
+  const chunkSize = Math.max(1, possibleSentences.length / amountOfSentences);
+  for (let i = 0; i < amountOfSentences && i < possibleSentences.length; i++) {
+    const elementInPossibleSentences = Math.floor(i * chunkSize + Math.random() * chunkSize);
+    selected.push(possibleSentences[elementInPossibleSentences]);
   }
-  return selected;
+  return selected.filter(sentence => !!sentence);
 }
 
 function minLength(minimumLengthOfSentence) {
