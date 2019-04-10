@@ -12,6 +12,7 @@ const Result = ({ sentence, show }) => {
   const fetchUrl = useRustCommand("fetchUrl");
   const log = useRustCommand("log");
   const [result, setResult] = useState(null);
+  const [failure, setFailure] = useState(null);
 
   useEffect(() => {
     const url = `https://www.google.de/search?q=${encodeURIComponent(sentence)}`;
@@ -19,6 +20,10 @@ const Result = ({ sentence, show }) => {
     window.updateResult[url] = blob => {
       const data = atob(blob);
       log(data);
+      if (data === "failed") {
+        setFailure(data);
+        return;
+      }
       const $ = cheerio.load(data);
       const $searchResults = $("#search ol .g");
       const searchResults = $searchResults
@@ -48,8 +53,10 @@ const Result = ({ sentence, show }) => {
 
   return (
     <div className={cn(style.root, show && style.show)}>
-      <LinearProgress variant="determinate" value={result === null ? 50 : 100} />
-      {result === null ? (
+      <LinearProgress variant="determinate" value={result === null && failure === null ? 50 : 100} />
+      {failure !== null ? (
+        <Typography>Failed to fetch result for: {sentence}</Typography>
+      ) : result === null ? (
         <Typography>Waiting for result for: {sentence}</Typography>
       ) : (
         <Grid container spacing={20}>
@@ -63,7 +70,9 @@ const Result = ({ sentence, show }) => {
                 <Typography paragraph>
                   {e.url} (Probability {e.probability}%)
                 </Typography>
-                <Typography paragraph>{e.description}</Typography>
+                <Typography paragraph className={style.description}>
+                  {e.description}
+                </Typography>
               </a>
             </Paper>
           ))}
