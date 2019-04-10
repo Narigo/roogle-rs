@@ -54,7 +54,7 @@ const Result = ({ sentence, show }) => {
       ) : (
         <Grid container spacing={20}>
           <Paper className={style.item}>
-            <Typography variant="h3">Probability of plagiarism: {result.maxProbability} %</Typography>
+            <Typography variant="headline">Probability of plagiarism: {result.maxProbability} %</Typography>
             <Typography paragraph>{sentence}</Typography>
           </Paper>
           {result.searchResults.map((e, i) => (
