@@ -34,11 +34,11 @@ const App = () => {
           }}
           className={style.header}
         >
-          <Typography align="center" variant="title" noWrap>
+          <Typography align="center" variant="title">
             Welcome to Roogle.
           </Typography>
-          <Typography noWrap>This is a description about roogle.</Typography>
-          <Typography noWrap>
+          <Typography>This is a description about roogle.</Typography>
+          <Typography>
             Right now, it selects 5 random sentences from the PDF. If you click the header, Roogle will reset.
           </Typography>
         </Grid>
