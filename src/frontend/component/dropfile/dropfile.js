@@ -3,6 +3,7 @@ import cn from "classnames";
 import style from "./dropfile.scss";
 import useRustCommand from "../../hooks/use-rust-command";
 import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 
 const Dropfile = ({ onDrop }) => {
@@ -58,7 +59,10 @@ const Dropfile = ({ onDrop }) => {
       }}
       onDrop={onDropHandler}
     >
-      <Typography>Drop a PDF file here</Typography>
+      <Paper className={style.description}>
+        <Typography variant="headline">Dropzone!</Typography>
+        <Typography>Drag and drop a PDF file here, to check it for plagiarism.</Typography>
+      </Paper>
     </Grid>
   );
 };
