@@ -25,7 +25,7 @@ const App = () => {
     <Fragment>
       <CssBaseline />
       <Grid container direction="column" className={style.root} wrap="nowrap">
-        <Paper className={style.header}>
+        <Paper className={style.header} elevation={0}>
           <Typography align="center" variant="title">
             Welcome to Roogle
           </Typography>
