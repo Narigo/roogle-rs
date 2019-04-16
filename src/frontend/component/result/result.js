@@ -59,7 +59,7 @@ const Result = ({ sentence, show }) => {
       ) : result === null ? (
         <Typography>Waiting for result for: {sentence}</Typography>
       ) : (
-        <Grid container spacing={20}>
+        <Grid container spacing={24}>
           <Paper className={style.item}>
             <Typography variant="headline">Probability of plagiarism: {result.maxProbability} %</Typography>
             <Typography paragraph>{sentence}</Typography>
