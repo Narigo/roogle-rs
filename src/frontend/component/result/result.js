@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import style from "./result.scss";
 import useRustCommand from "../../hooks/use-rust-command";
 import cn from "classnames";
+import { SearchItem } from "../search-item";
 
 const Result = ({ sentence, show }) => {
   const fetchUrl = useRustCommand("fetchUrl");
@@ -59,22 +60,13 @@ const Result = ({ sentence, show }) => {
       ) : result === null ? (
         <Typography>Waiting for result for: {sentence}</Typography>
       ) : (
-        <Grid container spacing={24}>
-          <Paper className={style.item}>
+        <Grid container>
+          <Paper className={style.probability}>
             <Typography variant="headline">Probability of plagiarism: {result.maxProbability} %</Typography>
             <Typography paragraph>{sentence}</Typography>
           </Paper>
           {result.searchResults.map((e, i) => (
-            <Paper className={style.item} key={i}>
-              <a href={e.url}>
-                <Typography paragraph>
-                  {e.url} (Probability {e.probability}%)
-                </Typography>
-                <Typography paragraph className={style.description}>
-                  {e.description}
-                </Typography>
-              </a>
-            </Paper>
+            <SearchItem item={e} key={i} />
           ))}
         </Grid>
       )}
