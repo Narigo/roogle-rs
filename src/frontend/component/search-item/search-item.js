@@ -5,16 +5,16 @@ import Typography from "@material-ui/core/Typography";
 import style from "./search-item.scss";
 
 const SearchItem = ({ item }) => (
-  <Paper className={style.root}>
-    <a href={item.url}>
+  <a className={style.root} href={item.url}>
+    <Paper className={style.paper}>
       <Typography paragraph>
         {item.url} (Probability {item.probability}%)
       </Typography>
       <Typography paragraph className={style.description}>
         {item.description}
       </Typography>
-    </a>
-  </Paper>
+    </Paper>
+  </a>
 );
 
 export default SearchItem;
