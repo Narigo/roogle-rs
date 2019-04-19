@@ -9,7 +9,7 @@ import useRustCommand from "../../hooks/use-rust-command";
 import cn from "classnames";
 import { SearchItem } from "../search-item";
 
-const Result = ({ sentence, show }) => {
+const Result = ({ onResult, sentence, show }) => {
   const fetchUrl = useRustCommand("fetchUrl");
   const log = useRustCommand("log");
   const [result, setResult] = useState(null);
@@ -44,10 +44,14 @@ const Result = ({ sentence, show }) => {
           };
         })
         .get();
-      setResult({
+      const res = {
         maxProbability: searchResults.reduce((maxProb, e) => (e.probability > maxProb ? e.probability : maxProb), 0),
         searchResults: searchResults.sort((a, b) => b.probability - a.probability)
-      });
+      };
+      setResult(res);
+      if (onResult) {
+        onResult(res);
+      }
     };
     fetchUrl(url);
   }, [sentence]);
