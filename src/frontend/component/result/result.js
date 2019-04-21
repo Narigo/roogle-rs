@@ -58,7 +58,7 @@ const Result = ({ onResult, sentence, show }) => {
 
   return (
     <div className={cn(style.root, show && style.show)}>
-      <LinearProgress variant="determinate" value={result === null && failure === null ? 50 : 100} />
+      {result === null && failure === null && <LinearProgress variant="indeterminate" />}
       {failure !== null ? (
         <Typography>Failed to fetch result for: {sentence}</Typography>
       ) : result === null ? (
