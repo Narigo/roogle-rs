@@ -31,16 +31,12 @@ const Result = ({ onResult, sentence, show }) => {
         .map((_index, elem) => {
           const $elem = $(elem);
           const $description = $elem.find(".st");
-          // console.log({
-          //   sentence,
-          //   boldTextLength: $description.find("b").text().length,
-          //   textLength: $description.text().length,
-          //   probability: Math.round((100 * $description.find("b").text().length) / $description.text().length) || 0
-          // });
+          const boldTextLength = $description.find("b").text().length;
+          const textLength = $description.text().length;
           return {
             url: $elem.find("cite").text(),
             description: $description.html(),
-            probability: Math.round((100 * $description.find("b").text().length) / $description.text().length) || 0
+            probability: Math.round((100 * boldTextLength) / textLength) || 0
           };
         })
         .get();
