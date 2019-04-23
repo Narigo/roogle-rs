@@ -8,6 +8,7 @@ import style from "./result.scss";
 import useRustCommand from "../../hooks/use-rust-command";
 import cn from "classnames";
 import { SearchItem } from "../search-item";
+import { Description } from "../description";
 
 const Result = ({ onResult, sentence, show }) => {
   const fetchUrl = useRustCommand("fetchUrl");
@@ -63,7 +64,7 @@ const Result = ({ onResult, sentence, show }) => {
         <Grid container>
           <Paper className={style.probability}>
             <Typography variant="headline">Probability of plagiarism: {result.maxProbability} %</Typography>
-            <Typography paragraph>{sentence}</Typography>
+            <Description text={sentence} />
           </Paper>
           {result.searchResults.map((e, i) => (
             <SearchItem item={e} key={i} />
