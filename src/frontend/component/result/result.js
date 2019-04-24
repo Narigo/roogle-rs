@@ -67,7 +67,7 @@ const Result = ({ onResult, sentence, show }) => {
             <Description text={sentence} />
           </Paper>
           {result.searchResults.map((e, i) => (
-            <SearchItem item={e} key={i} />
+            <SearchItem item={e} key={i} onClick={() => window.alert(e.url)} />
           ))}
         </Grid>
       )}
