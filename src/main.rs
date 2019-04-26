@@ -31,7 +31,7 @@ fn main() {
                             fetch_url(webview, text)?;
                         }
                         OpenUrl { text } => {
-                            open_url(webview, text);
+                            open_url(webview, text)?;
                         }
                     }
                     Ok(())
@@ -65,9 +65,9 @@ fn fetch_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
     wv.eval(&result)
 }
 
-fn open_url<T>(wv: &mut WebView<T>, url: String)  {
+fn open_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
     println!("Opening url {}", url);
-    wv.dialog().info(url.clone(), url);
+    wv.dialog().info(url.clone(), url)
 }
 
 struct Server {
