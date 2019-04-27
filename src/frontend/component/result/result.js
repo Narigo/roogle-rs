@@ -36,7 +36,7 @@ const Result = ({ onResult, sentence, show }) => {
           const boldTextLength = $description.find("b").text().length;
           const textLength = $description.text().length;
           return {
-            url: $elem.find("cite").text(),
+            url: $elem.find("a").attr("href"),
             description: $description.html(),
             probability: Math.round((100 * boldTextLength) / textLength) || 0
           };
