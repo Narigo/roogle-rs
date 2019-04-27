@@ -31,7 +31,7 @@ fn main() {
                             fetch_url(webview, text)?;
                         }
                         OpenUrl { text } => {
-                            open_url(webview, text)?;
+                            open_url(webview, text);
                         }
                     }
                     Ok(())
@@ -65,9 +65,20 @@ fn fetch_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
     wv.eval(&result)
 }
 
-fn open_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
+fn open_url<T>(_wv: &mut WebView<T>, url: String) {
     println!("Opening url {}", url);
-    wv.dialog().info(url.clone(), url)
+    web_view::builder()
+        .title("Roogle Result")
+        .content(Content::Url(format!("{}", url)))
+        .size(800, 600)
+        .resizable(true)
+        .debug(true)
+        .user_data(())
+        .invoke_handler(|webview, arg| {
+            Ok(())
+        })
+        .run()
+        .unwrap();
 }
 
 struct Server {
