@@ -10,7 +10,7 @@ const SearchItem = ({ item, onClick }) => (
       {item.url} (Probability {item.probability}%)
     </Typography>
     <Typography paragraph className={style.description}>
-      {item.description}
+      <div dangerouslySetInnerHTML={{ __html: item.description }} />
     </Typography>
   </Paper>
 );
