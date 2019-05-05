@@ -22,7 +22,6 @@ const Result = ({ onResult, sentence, show }) => {
     window.updateResult = window.updateResult || {};
     window.updateResult[url] = blob => {
       const data = atob(blob);
-      log(data);
       if (data === "failed") {
         setFailure(data);
         return;
