@@ -5,20 +5,20 @@ import cn from "classnames";
 
 import style from "./search-item.scss";
 
-const SearchItem = ({ item, onClick }) => (
-  <div className={style.root}>
-    <Paper
-      className={cn(style.paper, { [style.probably]: item.probability > 20, [style.check]: item.probability > 50 })}
-      onClick={onClick}
-    >
-      <Typography paragraph>
-        {item.url} (Probability {item.probability}%)
-      </Typography>
-      <Typography paragraph className={style.description}>
-        <div dangerouslySetInnerHTML={{ __html: item.description }} />
-      </Typography>
-    </Paper>
-  </div>
-);
+const SearchItem = ({ item, onClick }) => {
+  const probilityStyle = item.probability > 50 ? style.check : item.probability > 20 ? style.probably : style.okay;
+  return (
+    <div className={style.root}>
+      <Paper className={cn(style.paper, probilityStyle)} onClick={onClick}>
+        <Typography paragraph>
+          {item.url} (Probability {item.probability}%)
+        </Typography>
+        <Typography paragraph className={style.description}>
+          <div dangerouslySetInnerHTML={{ __html: item.description }} />
+        </Typography>
+      </Paper>
+    </div>
+  );
+};
 
 export default SearchItem;
