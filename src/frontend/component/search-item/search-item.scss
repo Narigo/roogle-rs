@@ -13,10 +13,14 @@
   text-decoration: none;
 }
 
-.probably {
+.paper.probably {
   background-color: #ff0;
 }
 
-.check {
+.paper.check {
   background-color: #f00;
+}
+
+.paper.okay {
+  background-color: #eee;
 }

@@ -5,8 +5,16 @@ import cn from "classnames";
 
 import style from "./search-item.scss";
 
+const WARNING_PERCENTAGE = 40;
+const MAYBE_PERCENTAGE = 20;
+
 const SearchItem = ({ item, onClick }) => {
-  const probilityStyle = item.probability > 50 ? style.check : item.probability > 20 ? style.probably : style.okay;
+  const probilityStyle =
+    item.probability > WARNING_PERCENTAGE
+      ? style.check
+      : item.probability > MAYBE_PERCENTAGE
+      ? style.probably
+      : style.okay;
   return (
     <div className={style.root}>
       <Paper className={cn(style.paper, probilityStyle)} onClick={onClick}>
