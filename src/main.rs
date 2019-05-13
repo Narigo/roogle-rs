@@ -7,10 +7,7 @@ extern crate reqwest;
 extern crate serde_json;
 extern crate url;
 extern crate web_view;
-extern crate url_open;
-
-use url::Url;
-use url_open::UrlOpen;
+extern crate webbrowser;
 
 use web_view::*;
 
@@ -71,7 +68,7 @@ fn fetch_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
 
 fn open_url<T>(_wv: &mut WebView<T>, url: String) {
     println!("Opening url {}", url);
-    Url::parse(url).unwrap().open();
+    webbrowser::open(url.as_str()).unwrap();
 }
 
 struct Server {

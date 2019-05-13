@@ -34,8 +34,12 @@ const Result = ({ onResult, sentence, show }) => {
           const $description = $elem.find(".st");
           const boldTextLength = $description.find("b").text().length;
           const textLength = $description.text().length;
+          const link = $elem.find("a").attr("href");
+          console.log("link", link);
+          const url = new URL(link, "https://www.google.com").searchParams.get("q");
+          console.log("url", url);
           return {
-            url: $elem.find("a").attr("href"),
+            url,
             description: $description.html(),
             probability: Math.round((100 * boldTextLength) / textLength) || 0
           };
