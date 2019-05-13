@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -25,6 +26,16 @@ const App = () => {
           <Typography align="center" variant="title">
             Welcome to Roogle
           </Typography>
+          {files !== null && (
+            <Button
+              onClick={() => {
+                setFiles(null);
+                setSentences(null);
+              }}
+            >
+              <Typography>Reset</Typography>
+            </Button>
+          )}
         </Paper>
         <Grid item xs className={style.dropzone}>
           {files === null ? (

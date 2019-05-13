@@ -35,9 +35,7 @@ const Result = ({ onResult, sentence, show }) => {
           const boldTextLength = $description.find("b").text().length;
           const textLength = $description.text().length;
           const link = $elem.find("a").attr("href");
-          console.log("link", link);
-          const url = new URL(link, "https://www.google.com").searchParams.get("q");
-          console.log("url", url);
+          const url = new URL(link, "https://localhost").searchParams.get("q");
           return {
             url,
             description: $description.html(),
