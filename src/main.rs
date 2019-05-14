@@ -51,7 +51,6 @@ pub enum Cmd {
 }
 
 fn fetch_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
-    println!("Retrieving url {}", url);
     let body = reqwest::get(url.as_str())
         .map(|mut x| x.text())
         .unwrap_or(Ok(String::from("failed")))
@@ -67,7 +66,6 @@ fn fetch_url<T>(wv: &mut WebView<T>, url: String) -> WVResult {
 }
 
 fn open_url<T>(_wv: &mut WebView<T>, url: String) {
-    println!("Opening url {}", url);
     webbrowser::open(url.as_str()).unwrap();
 }
 

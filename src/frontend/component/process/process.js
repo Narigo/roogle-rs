@@ -12,11 +12,9 @@ const Process = ({ files, onDone }) => {
   useEffect(() => {
     let cancelled = false;
 
-    console.log("parsing files", files);
     parsePdf(files[0])
       .then(
         checkCancelled(data => {
-          console.log("parsed data!", data);
           const text = data.pages.reduce((text, page) => `${text}\n${page.text}`, "");
           setProgress("process-text");
           return splitTextIntoSentences({ text, log });
@@ -35,7 +33,6 @@ const Process = ({ files, onDone }) => {
         })
       )
       .catch(error => {
-        console.log("catched!", error);
         if (error.message !== "cancelled") {
           throw error;
         }
