@@ -13,7 +13,6 @@ import { Description } from "../description";
 const Result = ({ onResult, sentence, show }) => {
   const fetchUrl = useRustCommand("fetchUrl");
   const openBrowser = useRustCommand("openUrl");
-  const log = useRustCommand("log");
   const [result, setResult] = useState(null);
   const [failure, setFailure] = useState(null);
 
