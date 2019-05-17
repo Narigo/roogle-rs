@@ -25,17 +25,17 @@ const App = () => {
         <Paper className={style.header} elevation={0}>
           <Typography align="center" variant="title">
             Welcome to Roogle
+            {files !== null && (
+              <Button
+                onClick={() => {
+                  setFiles(null);
+                  setSentences(null);
+                }}
+              >
+                <Typography>Reset</Typography>
+              </Button>
+            )}
           </Typography>
-          {files !== null && (
-            <Button
-              onClick={() => {
-                setFiles(null);
-                setSentences(null);
-              }}
-            >
-              <Typography>Reset</Typography>
-            </Button>
-          )}
         </Paper>
         <Grid item xs className={style.dropzone}>
           {files === null ? (
