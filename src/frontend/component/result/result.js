@@ -32,13 +32,19 @@ const Result = ({ onResult, sentence, show }) => {
           const $elem = $(elem);
           const $description = $elem.find(".st");
           const boldTextLength = $description.find("b").text().length;
-          const textLength = $description.text().length;
+          const words = $description
+            .text()
+            .split(/\s/)
+            .filter(t => t.length > 3);
+          const textLength = words.join(" ").length;
+          const probability = Math.round((100 * boldTextLength) / textLength) || 0;
+          console.log({ words, boldTextLength, textLength, probability });
           const link = $elem.find("a").attr("href");
           const url = new URL(link, "https://localhost").searchParams.get("q");
           return {
             url,
             description: $description.html(),
-            probability: Math.round((100 * boldTextLength) / textLength) || 0
+            probability
           };
         })
         .get();
