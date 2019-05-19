@@ -20,7 +20,7 @@ const Result = ({ onResult, sentence, show }) => {
     const url = `https://www.google.de/search?q=${encodeURIComponent(sentence)}`;
     window.updateResult = window.updateResult || {};
     window.updateResult[url] = blob => {
-      const data = atob(blob);
+      const data = base64DecodeUnicode(blob);
       if (data === "failed") {
         setFailure(data);
         return;
@@ -81,5 +81,14 @@ const Result = ({ onResult, sentence, show }) => {
     </div>
   );
 };
+
+function base64DecodeUnicode(bytes) {
+  return decodeURIComponent(
+    atob(bytes)
+      .split("")
+      .map(c => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+      .join("")
+  );
+}
 
 export default Result;
