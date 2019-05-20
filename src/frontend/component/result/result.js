@@ -9,6 +9,7 @@ import useRustCommand from "../../hooks/use-rust-command";
 import cn from "classnames";
 import { SearchItem } from "../search-item";
 import { Description } from "../description";
+import { base64DecodeUnicode } from "../../lib/base64-decode-unicode";
 
 const Result = ({ onResult, sentence, show }) => {
   const fetchUrl = useRustCommand("fetchUrl");
@@ -81,14 +82,5 @@ const Result = ({ onResult, sentence, show }) => {
     </div>
   );
 };
-
-function base64DecodeUnicode(bytes) {
-  return decodeURIComponent(
-    atob(bytes)
-      .split("")
-      .map(c => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-      .join("")
-  );
-}
 
 export default Result;
