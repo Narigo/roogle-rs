@@ -16,7 +16,6 @@ import useRustCommand from "../../hooks/use-rust-command";
 const App = () => {
   const [files, setFiles] = useState(null);
   const [sentences, setSentences] = useState(null);
-  const log = useRustCommand("log");
 
   return (
     <Fragment>
@@ -41,7 +40,6 @@ const App = () => {
           {files === null ? (
             <Dropfile
               onDrop={files => {
-                log(`dropped something`);
                 setFiles(files);
               }}
             />
