@@ -48,7 +48,6 @@ const Dropfile = ({ onDrop }) => {
       container
       alignItems="center"
       justify="center"
-      onClick={() => log("something clicked.")}
       onDragOver={event => {
         event.preventDefault();
         setDragOver(true);
