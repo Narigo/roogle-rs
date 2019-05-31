@@ -71,7 +71,7 @@ const Result = ({ onResult, sentence, show }) => {
       ) : (
         <Grid container>
           <Paper className={style.probability}>
-            <Typography variant="headline">Probability of plagiarism: {result.maxProbability} %</Typography>
+            <Typography variant="h3">Probability of plagiarism: {result.maxProbability} %</Typography>
             <Description text={sentence} />
           </Paper>
           {result.searchResults.map((e, i) => (

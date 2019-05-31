@@ -59,7 +59,7 @@ const Dropfile = ({ onDrop }) => {
       onDrop={onDropHandler}
     >
       <Paper className={style.description}>
-        <Typography variant="headline">Dropzone!</Typography>
+        <Typography variant="h3">Dropzone!</Typography>
         <Typography>Drag and drop a PDF file here, to check it for plagiarism.</Typography>
       </Paper>
     </Grid>
