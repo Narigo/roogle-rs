@@ -24,8 +24,8 @@
   },
   "homepage": "https://github.com/Narigo/roogle-rs#readme",
   "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@babel/plugin-transform-runtime": "^7.4.3",
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-transform-runtime": "^7.4.4",
     "cheerio": "^1.0.0-rc.3",
     "classnames": "^2.2.6",
     "inline-assets": "^1.4.2",
@@ -35,7 +35,7 @@
     "postcss-modules": "^1.4.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "sass": "^1.18.0"
+    "sass": "^1.20.3"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.3",
