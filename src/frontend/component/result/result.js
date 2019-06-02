@@ -1,86 +1,40 @@
-import React, { useEffect, useState } from "react";
-import cheerio from "cheerio";
-import Grid from "@material-ui/core/Grid";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import React, { useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import style from "./result.scss";
 import useRustCommand from "../../hooks/use-rust-command";
-import cn from "classnames";
-import { SearchItem } from "../search-item";
-import { Description } from "../description";
-import { base64DecodeUnicode } from "../../lib/base64-decode-unicode";
+import { Button } from "@material-ui/core";
 
-const Result = ({ onResult, sentence, show }) => {
-  const fetchUrl = useRustCommand("fetchUrl");
+const Result = ({ sentences }) => {
   const openBrowser = useRustCommand("openUrl");
-  const [result, setResult] = useState(null);
-  const [failure, setFailure] = useState(null);
-
-  useEffect(() => {
-    const url = `https://www.google.de/search?q=${encodeURIComponent(sentence)}`;
-    window.updateResult = window.updateResult || {};
-    window.updateResult[url] = blob => {
-      const data = base64DecodeUnicode(blob);
-      if (data === "failed") {
-        setFailure(data);
-        return;
-      }
-      const $ = cheerio.load(data);
-      const $searchResults = $("#search ol .g");
-      const searchResults = $searchResults
-        .map((_index, elem) => {
-          const $elem = $(elem);
-          const $description = $elem.find(".st");
-          const boldTextLength = $description.find("b").text().length;
-          const words = $description
-            .text()
-            .split(/\s/)
-            .filter(t => t.length > 3);
-          const textLength = words.join(" ").length;
-          const probability = Math.round((100 * boldTextLength) / textLength) || 0;
-          console.log({ words, boldTextLength, textLength, probability });
-          const link = $elem.find("a").attr("href");
-          const url = new URL(link, "https://localhost").searchParams.get("q");
-          return {
-            url,
-            description: $description.html(),
-            probability
-          };
-        })
-        .get();
-      const res = {
-        maxProbability: searchResults.reduce((maxProb, e) => (e.probability > maxProb ? e.probability : maxProb), 0),
-        searchResults: searchResults.sort((a, b) => b.probability - a.probability)
-      };
-      setResult(res);
-      if (onResult) {
-        onResult(res);
-      }
-    };
-    fetchUrl(url);
-  }, [sentence]);
 
   return (
-    <div className={cn(style.root, show && style.show)}>
-      {result === null && failure === null && <LinearProgress variant="indeterminate" />}
-      {failure !== null ? (
-        <Typography>Failed to fetch result for: {sentence}</Typography>
-      ) : result === null ? (
-        <Typography>Waiting for result for: {sentence}</Typography>
-      ) : (
-        <Grid container>
-          <Paper className={style.probability}>
-            <Typography variant="h5">Probability of plagiarism: {result.maxProbability} %</Typography>
-            <Description text={sentence} />
-          </Paper>
-          {result.searchResults.map((e, i) => (
-            <SearchItem item={e} key={i} onClick={() => openBrowser(e.url)} />
-          ))}
-        </Grid>
-      )}
-    </div>
+    <Paper className={style.root}>
+      <Typography>The browser should open a few tabs now. If it didn't, these are your URLs to open:</Typography>
+      <ul>
+        {sentences.map(sentence => (
+          <li key={sentence}>
+            <a href={getGoogleUrl(sentence)}>
+              <Typography>{sentence}</Typography>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <Button
+        onClick={e => {
+          for (let sentence of sentences) {
+            openBrowser(getGoogleUrl(sentence));
+          }
+        }}
+      >
+        <Typography>Open all searches in Browser</Typography>
+      </Button>
+    </Paper>
   );
 };
+
+function getGoogleUrl(sentence) {
+  return `https://www.google.de/search?q=${encodeURIComponent(sentence)}`;
+}
 
 export default Result;

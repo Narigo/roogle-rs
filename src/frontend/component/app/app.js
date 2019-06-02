@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -10,8 +10,7 @@ import style from "./app.scss";
 
 import { Dropfile } from "../dropfile";
 import { Process } from "../process";
-import { Results } from "../results";
-import useRustCommand from "../../hooks/use-rust-command";
+import { Result } from "../result";
 
 const App = () => {
   const [files, setFiles] = useState(null);
@@ -46,7 +45,7 @@ const App = () => {
           ) : sentences === null ? (
             <Process files={files} onDone={sentences => setSentences(sentences)} />
           ) : (
-            <Results sentences={sentences} />
+            <Result sentences={sentences} />
           )}
         </Grid>
       </Grid>
