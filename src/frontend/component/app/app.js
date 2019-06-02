@@ -22,7 +22,7 @@ const App = () => {
       <CssBaseline />
       <Grid container direction="column" className={style.root} wrap="nowrap">
         <Paper className={style.header} elevation={0}>
-          <Typography align="center" variant="h2">
+          <Typography align="center" variant="h6">
             Welcome to Roogle
             {files !== null && (
               <Button
