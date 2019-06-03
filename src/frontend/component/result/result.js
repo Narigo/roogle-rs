@@ -1,16 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
+import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import style from "./result.scss";
+
 import useRustCommand from "../../hooks/use-rust-command";
-import { Button } from "@material-ui/core";
+import style from "./result.scss";
 
 const Result = ({ sentences }) => {
   const openBrowser = useRustCommand("openUrl");
 
   return (
     <Paper className={style.root}>
-      <Typography>The browser should open a few tabs now. If it didn't, these are your URLs to open:</Typography>
+      <Typography>The browser should open a few tabs now. If it did not, these are your URLs to open:</Typography>
       <ul>
         {sentences.map(sentence => (
           <li key={sentence}>
@@ -21,7 +22,7 @@ const Result = ({ sentences }) => {
         ))}
       </ul>
       <Button
-        onClick={e => {
+        onClick={() => {
           for (let sentence of sentences) {
             openBrowser(getGoogleUrl(sentence));
           }

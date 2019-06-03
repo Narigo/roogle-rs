@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -38,8 +38,8 @@ const App = () => {
         <Grid item xs className={style.dropzone}>
           {files === null ? (
             <Dropfile
-              onDrop={files => {
-                setFiles(files);
+              onDrop={droppedFiles => {
+                setFiles(droppedFiles);
               }}
             />
           ) : sentences === null ? (
