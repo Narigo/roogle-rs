@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 
 import useRustCommand from "../../hooks/use-rust-command";
 import style from "./result.scss";
+import getGoogleUrl from "../../lib/get-google-url";
 
 const Result = ({ sentences }) => {
   const openBrowser = useRustCommand("openUrl");
@@ -23,7 +24,7 @@ const Result = ({ sentences }) => {
       </ul>
       <Button
         onClick={() => {
-          for (let sentence of sentences) {
+          for (const sentence of sentences) {
             openBrowser(getGoogleUrl(sentence));
           }
         }}
@@ -33,9 +34,5 @@ const Result = ({ sentences }) => {
     </Paper>
   );
 };
-
-function getGoogleUrl(sentence) {
-  return `https://www.google.de/search?q=${encodeURIComponent(sentence)}`;
-}
 
 export default Result;

@@ -45,9 +45,8 @@ const Process = ({ files, onDone }) => {
       return (...args) => {
         if (!cancelled) {
           return fn(...args);
-        } else {
-          throw new Error("cancelled");
         }
+        throw new Error("cancelled");
       };
     }
   }, [files]);
@@ -82,7 +81,7 @@ function selectSentences({ amountOfSentences = 5, minimumLengthOfSentence = 50, 
   const selected = [];
   const possibleSentences = sentences.filter(minLength(minimumLengthOfSentence));
   const chunkSize = Math.max(1, possibleSentences.length / amountOfSentences);
-  for (let i = 0; i < amountOfSentences && i < possibleSentences.length; i++) {
+  for (let i = 0; i < amountOfSentences && i < possibleSentences.length; i += 1) {
     const elementInPossibleSentences = Math.floor(i * chunkSize + Math.random() * chunkSize);
     selected.push(possibleSentences[elementInPossibleSentences]);
   }

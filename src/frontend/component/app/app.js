@@ -43,7 +43,7 @@ const App = () => {
               }}
             />
           ) : sentences === null ? (
-            <Process files={files} onDone={sentences => setSentences(sentences)} />
+            <Process files={files} onDone={sentencesResult => setSentences(sentencesResult)} />
           ) : (
             <Result sentences={sentences} />
           )}

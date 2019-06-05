@@ -8,9 +8,11 @@
   },
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "implicit-arrow-linebreak": "off",
     "comma-dangle": "off",
+    "implicit-arrow-linebreak": "off",
     "indent": "off",
-    "no-trailing-spaces": "off"
+    "no-nested-ternary": "off",
+    "no-trailing-spaces": "off",
+    "no-use-before-define": ["error", "nofunc"]
   }
 }

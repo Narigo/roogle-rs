@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import cn from "classnames";
-import style from "./dropfile.scss";
-import useRustCommand from "../../hooks/use-rust-command";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import useRustCommand from "../../hooks/use-rust-command";
+import style from "./dropfile.scss";
 
 const Dropfile = ({ onDrop }) => {
   const [dragOver, setDragOver] = useState(false);
@@ -13,13 +13,13 @@ const Dropfile = ({ onDrop }) => {
     event.preventDefault();
     const files = [];
     if (event.dataTransfer.items) {
-      for (let i = 0; i < event.dataTransfer.items.length; i++) {
+      for (let i = 0; i < event.dataTransfer.items.length; i += 1) {
         if (event.dataTransfer.items[i].kind === "file") {
           files.push(event.dataTransfer.items[i].getAsFile());
         }
       }
     } else {
-      for (let i = 0; i < event.dataTransfer.files.length; i++) {
+      for (let i = 0; i < event.dataTransfer.files.length; i += 1) {
         files.push(event.dataTransfer.files[i]);
       }
     }
@@ -28,17 +28,17 @@ const Dropfile = ({ onDrop }) => {
         file =>
           new Promise((resolve, reject) => {
             const reader = new FileReader();
-            reader.onload = function(event) {
-              resolve(event.target.result);
+            reader.onload = loadEvent => {
+              resolve(loadEvent.target.result);
             };
-            reader.onerror = function(error) {
+            reader.onerror = error => {
               reject(error);
             };
             reader.readAsArrayBuffer(file);
           })
       )
     )
-      .then(files => onDrop(files))
+      .then(droppedFiles => onDrop(droppedFiles))
       .catch(err => log(`Error while reading file: ${err}`));
   };
 
