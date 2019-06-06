@@ -12,7 +12,10 @@ const Result = ({ sentences }) => {
 
   return (
     <Paper className={style.root}>
-      <Typography>The browser should open a few tabs now. If it did not, these are your URLs to open:</Typography>
+      <Typography>
+        These are some random sentences from the PDF. Check each one individually (opens browser) or all at once by
+        clicking the button below (opens multiple browser tabs).
+      </Typography>
       <ul>
         {sentences.map(sentence => (
           <li key={sentence}>
