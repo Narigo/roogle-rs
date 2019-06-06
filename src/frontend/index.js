@@ -5,6 +5,9 @@ import ReactDom from "react-dom";
 import { App } from "./component/app";
 
 (typeof window !== "undefined" ? window : {}).pdfjsWorker = pdfJsWorker;
+if (window.PDFJS) {
+  window.PDFJS.disableWorker = true;
+}
 
 const $root = document.getElementById("root");
 

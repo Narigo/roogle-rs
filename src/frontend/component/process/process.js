@@ -15,7 +15,7 @@ const Process = ({ files, onDone }) => {
     parsePdf(files[0])
       .then(
         checkCancelled(data => {
-          const text = data.pages.reduce((text, page) => `${text}\n${page.text}`, "");
+          const text = data.pages.reduce((acc, page) => `${acc}\n${page.text}`, "");
           setProgress("process-text");
           return splitTextIntoSentences({ text, log });
         })

@@ -48,7 +48,7 @@
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.6",
     "parse-pdf": "^1.0.0",
-    "pdfjs-dist": "^2.0.943",
+    "pdfjs-dist": "2.0.489",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "typeface-roboto": "0.0.54"
