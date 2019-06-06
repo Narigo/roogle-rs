@@ -24,9 +24,9 @@ const Result = ({ sentences }) => {
       </ul>
       <Button
         onClick={() => {
-          for (const sentence of sentences) {
+          sentences.forEach(sentence => {
             openBrowser(getGoogleUrl(sentence));
-          }
+          });
         }}
       >
         <Typography>Open all searches in Browser</Typography>
