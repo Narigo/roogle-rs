@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -18,16 +19,8 @@ const Result = ({ sentences }) => {
           These are some random sentences from the PDF. Check each one individually (opens browser) or all at once by
           clicking the button below (opens multiple browser tabs).
         </Typography>
-        <ul>
-          {sentences.map(sentence => (
-            <li key={sentence}>
-              <a href={getGoogleUrl(sentence)}>
-                <Typography>{sentence}</Typography>
-              </a>
-            </li>
-          ))}
-        </ul>
         <Button
+          className={style.openAll}
           onClick={() => {
             sentences.forEach(sentence => {
               openBrowser(getGoogleUrl(sentence));
@@ -36,6 +29,21 @@ const Result = ({ sentences }) => {
         >
           <Typography>Open all searches in Browser</Typography>
         </Button>
+        <Divider className={style.divider} />
+        <ul>
+          {sentences.map(sentence => (
+            <li key={sentence}>
+              <Button
+                className={style.openSentence}
+                onClick={() => {
+                  openBrowser(getGoogleUrl(sentence));
+                }}
+              >
+                <Typography>{sentence}</Typography>
+              </Button>
+            </li>
+          ))}
+        </ul>
       </Paper>
     </Grid>
   );
