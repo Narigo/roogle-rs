@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 
@@ -11,30 +12,32 @@ const Result = ({ sentences }) => {
   const openBrowser = useRustCommand("openUrl");
 
   return (
-    <Paper className={style.root}>
-      <Typography>
-        These are some random sentences from the PDF. Check each one individually (opens browser) or all at once by
-        clicking the button below (opens multiple browser tabs).
-      </Typography>
-      <ul>
-        {sentences.map(sentence => (
-          <li key={sentence}>
-            <a href={getGoogleUrl(sentence)}>
-              <Typography>{sentence}</Typography>
-            </a>
-          </li>
-        ))}
-      </ul>
-      <Button
-        onClick={() => {
-          sentences.forEach(sentence => {
-            openBrowser(getGoogleUrl(sentence));
-          });
-        }}
-      >
-        <Typography>Open all searches in Browser</Typography>
-      </Button>
-    </Paper>
+    <Grid className={style.root} container>
+      <Paper className={style.paper}>
+        <Typography>
+          These are some random sentences from the PDF. Check each one individually (opens browser) or all at once by
+          clicking the button below (opens multiple browser tabs).
+        </Typography>
+        <ul>
+          {sentences.map(sentence => (
+            <li key={sentence}>
+              <a href={getGoogleUrl(sentence)}>
+                <Typography>{sentence}</Typography>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <Button
+          onClick={() => {
+            sentences.forEach(sentence => {
+              openBrowser(getGoogleUrl(sentence));
+            });
+          }}
+        >
+          <Typography>Open all searches in Browser</Typography>
+        </Button>
+      </Paper>
+    </Grid>
   );
 };
 
