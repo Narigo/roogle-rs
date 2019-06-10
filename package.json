@@ -10,7 +10,9 @@
     "build:rust": "cargo build",
     "dev": "parcel src/frontend/index.html",
     "start": "npm run build:bundle && cargo run",
-    "test": "eslint src/"
+    "test": "npm run test:js && npm run test:lint",
+    "test:js": "jest src/",
+    "test:lint": "eslint src/"
   },
   "repository": {
     "type": "git",
