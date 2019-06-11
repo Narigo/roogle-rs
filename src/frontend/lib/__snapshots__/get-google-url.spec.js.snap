@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`get-google-url returns the proper URL 1`] = `"https://www.google.de/search?q=This%20is%20a%20test%20of%20the%20basic%20functionality"`;
+
+exports[`get-google-url returns the proper URL when Umlaute are used 1`] = `"https://www.google.de/search?q=Das%20ist%20ein%20S%C3%A4tzchen%20mit%20Umlauten%20dass%20das%20mal%20getestet%20wird"`;
