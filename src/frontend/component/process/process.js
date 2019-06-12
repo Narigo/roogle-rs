@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Typography from "@material-ui/core/Typography";
 import parsePdf from "parse-pdf";
 import style from "./process.scss";
-import useRustCommand from "../../hooks/use-rust-command.js";
+import useRustCommand from "../../hooks/use-rust-command";
 
 const Process = ({ files, onDone }) => {
   const [progress, setProgress] = useState("start");
@@ -68,6 +69,10 @@ const Process = ({ files, onDone }) => {
       </Typography>
     </div>
   );
+};
+Process.propTypes = {
+  files: PropTypes.arrayOf(PropTypes.any).isRequired,
+  onDone: PropTypes.func.isRequired
 };
 
 export default Process;

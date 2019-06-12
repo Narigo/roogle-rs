@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import cn from "classnames";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -64,6 +65,9 @@ const Dropfile = ({ onDrop }) => {
       </Paper>
     </Grid>
   );
+};
+Dropfile.propTypes = {
+  onDrop: PropTypes.func.isRequired
 };
 
 export default Dropfile;
