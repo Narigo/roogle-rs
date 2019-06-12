@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
@@ -47,6 +48,12 @@ const Result = ({ sentences }) => {
       </Paper>
     </Grid>
   );
+};
+Result.defaultProps = {
+  sentences: []
+};
+Result.propTypes = {
+  sentences: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default Result;
