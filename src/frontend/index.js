@@ -2,7 +2,7 @@ import "babel-polyfill";
 import pdfJsWorker from "pdfjs-dist/build/pdf.worker";
 import React from "react";
 import ReactDom from "react-dom";
-import { App } from "./component/app";
+import App from "./component/app";
 
 (typeof window !== "undefined" ? window : {}).pdfjsWorker = pdfJsWorker;
 if (window.PDFJS) {

@@ -1,1 +1,1 @@
-export { default as Dropfile } from "./dropfile";
+export { default } from "./dropfile";

@@ -8,9 +8,9 @@ import "typeface-roboto";
 
 import style from "./app.scss";
 
-import { Dropfile } from "../dropfile";
-import { Process } from "../process";
-import { Result } from "../result";
+import Dropfile from "../dropfile";
+import Process from "../process";
+import Result from "../result";
 
 const App = () => {
   const [files, setFiles] = useState(null);

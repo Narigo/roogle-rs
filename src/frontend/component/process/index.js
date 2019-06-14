@@ -1,1 +1,1 @@
-export { default as Process } from "./process";
+export { default } from "./process";
