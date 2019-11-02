@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -17,7 +17,7 @@ const App = () => {
   const [sentences, setSentences] = useState(null);
 
   return (
-    <Fragment>
+    <>
       <CssBaseline />
       <Grid container direction="column" className={style.root} wrap="nowrap">
         <Paper className={style.header} elevation={0}>
@@ -49,7 +49,7 @@ const App = () => {
           )}
         </Grid>
       </Grid>
-    </Fragment>
+    </>
   );
 };
 
